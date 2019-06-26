@@ -1,0 +1,81 @@
+<resources>
+    <string name="app_name">RainAds</string>
+
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in">Log In</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="signup">Signup</string>
+    <string name="login">Login</string>
+    <string name="invalid_credentials">Invalid Credentials</string>
+    <string name="username">Username</string>
+    <string name="market">Market</string>
+    <string name="network">Network</string>
+    <string name="withdraw">Withdraw</string>
+    <string name="satoshi">Satoshi</string>
+    <string name="balance">Balance</string>
+    <string name="advertise">Advertise</string>
+    <string name="watch_ad">Watch Ad</string>
+    <string name="settings">Settings</string>
+    <string name="zero">0</string>
+    <string name="btc_address">Btc Address</string>
+    <string name="log_out">Log Out</string>
+    <string name="loading">Loading</string>
+    <string name="referral_code">Referral Code</string>
+    <string name="code_copied">Code Copied</string>
+    <string name="btc_copied">BTC Address Copied</string>
+    <string name="ad_website_url">Ad Website Url</string>
+    <string name="ad_duration">Ad Duration</string>
+    <string name="title">Title</string>
+    <string name="ask_for_referral">If someone recommended you, please consider adding their Referral Code in the field below.</string>
+    <string name="before_proceeding">Before proceeding…</string>
+    <string name="save">Save</string>
+    <string name="skip">Skip</string>
+    <string name="duration">Duration</string>
+    <string name="price">Price</string>
+    <string name="denied">DENIED</string>
+    <string name="referrals">Referrals</string>
+    <string name="level">Level</string>
+    <string name="description">Description</string>
+    <string name="country">Country</string>
+    <string name="save_ad">SAVE AD</string>
+    <string name="logout_confirm">Are you sure you want to log out?</string>
+    <string name="countries">Countries</string>
+    <string name="search">Search</string>
+    <string name="clear_all">Clear All</string>
+    <string name="all">All</string>
+    <string name="countries_all">Countries (All)</string>
+    <string name="s">s</string>
+    <string name="my_ads">My Ads</string>
+    <string name="new_ad">New Ad</string>
+    <string name="soon">Soon</string>
+    <string name="ad_placement">AD PLACEMENT</string>
+    <string name="you_haven_t_created_any_ads_yet">You haven\'t created any ads yet…</string>
+    <string name="warning">Warning</string>
+    <string name="cancel">Cancel</string>
+    <string name="important">Important!</string>
+    <string name="no">No</string>
+    <string name="yes_i_want_50_more">YES, I WANT 50% MORE</string>
+    <string name="extra_ad_description">You have just earned %1$s satoshi!\nDo you want to earn additional <b>50%%</b>?</string>
+
+    <string-array name="ad_price_duration_list">
+        <item>15 seconds/35 satoshi</item>
+        <item>20 seconds/40 satoshi</item>
+        <item>25 seconds/45 satoshi</item>
+        <item>30 seconds/50 satoshi</item>
+        <item>35 seconds/55 satoshi</item>
+        <item>40 seconds/60 satoshi</item>
+        <item>45 seconds/65 satoshi</item>
+    </string-array>
+
+
+    <string-array name="balance_items">
+        <item>BALANCE</item>
+        <item>AD BALANCE</item>
+    </string-array>
+
+</resources>

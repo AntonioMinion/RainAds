@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/main_gradient_background"
+        tools:context=".ui.initial.view.InitialActivity">
+
+    <ImageView
+            android:id="@+id/iv_logo"
+            android:transitionName="logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="22dp"
+            android:src="@drawable/ic_launcher_foreground"/>
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="52dp">
+
+            <Button
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:id="@+id/menu_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/signup"
+                    android:textAllCaps="false"
+                    android:layout_weight="0.5"
+                    android:textColor="@color/colorAccent"
+                    android:background="@drawable/initial_menu_top_left_selected"/>
+
+            <Button
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:id="@+id/menu_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:text="@string/login"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="-1dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/initial_menu_top_right"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/ll_container"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:animateLayoutChanges="true"
+                android:background="@drawable/initial_menu_background"
+                android:layout_height="match_parent">
+
+            <EditText
+                    android:id="@+id/et_email"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:inputType="textEmailAddress"
+                    android:textColorHint="@color/white_60"
+                    android:backgroundTint="@color/white_60"
+                    android:textColor="@color/white"
+                    android:hint="@string/email"/>
+
+            <EditText
+                    android:id="@+id/et_password"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/white_60"
+                    android:backgroundTint="@color/white_60"
+                    android:textColor="@color/white"
+                    android:hint="@string/password"/>
+
+            <EditText
+                    android:id="@+id/et_confirm_password"
+                    android:layout_margin="8dp"
+                    android:textSize="14sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/white_60"
+                    android:backgroundTint="@color/white_60"
+                    android:hint="@string/confirm_password"/>
+
+            <Spinner
+                    android:id="@+id/spinner_countries"
+                    android:layout_width="match_parent"
+                    android:layout_margin="8dp"
+                    android:spinnerMode="dialog"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_height="wrap_content"/>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_height="48dp">
+
+                <Button
+                        android:id="@+id/btnLoginOrSignUp"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/sign_up"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:background="@drawable/initial_menu_button_selector"/>
+
+                <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:visibility="gone"
+                        android:padding="8dp"
+                        android:elevation="8dp"
+                        android:theme="@style/AppTheme.DarkControls"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:padding="12dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Terms and Conditions"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_height="wrap_content"/>
+</LinearLayout>

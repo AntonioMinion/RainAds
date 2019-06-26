@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.rainads.rainadsapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
+    <application
+        android:name="com.rainads.rainadsapp.MyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
+
+        <activity
+            android:name="com.rainads.rainadsapp.ui.myadlist.view.MyAdListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.rainads.rainadsapp.ui.levels.view.LevelsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.rainads.rainadsapp.ui.addad.view.AddAdActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.rainads.rainadsapp.ui.watchad.view.WatchAdActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.rainads.rainadsapp.ui.main.view.MainActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.rainads.rainadsapp.ui.initial.view.InitialActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullscreenTheme" />
+
+        <activity
+            android:name="com.rainads.rainadsapp.ui.splash.view.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.google.com"
+                    android:pathPattern="/ads"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
