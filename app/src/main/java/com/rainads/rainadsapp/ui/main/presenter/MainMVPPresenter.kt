@@ -6,5 +6,6 @@ import com.rainads.rainadsapp.ui.main.view.MainMVPView
 
 interface MainMVPPresenter<V : MainMVPView, I : MainMVPInteractor> : MVPPresenter<V, I> {
     fun logoutUser()
+    fun getUser()
     fun getAd()
 }

@@ -61,6 +61,24 @@ class WatchAdPresenter<V : WatchAdView, I : IWatchAdInteractor>
         countDownTimer.start()
     }
 
+    override fun watchAdExtra(adId: String){
+        interactor?.let {
+            compositeDisposable.add(
+                it.watchAd(adId)
+                    .compose(schedulerProvider.ioToMainObservableScheduler())
+                    .subscribe({ msg ->
+                        getView()?.onAdWatchedExtra(ToastType.SUCCESS, msg)
+                    }, { err ->
+                        println(err)
+                        getView()?.onAdWatchedExtra(
+                            ToastType.ERROR,
+                            if (!err.message.isNullOrEmpty()) "" else Handler.getErrorMessage(0)
+                        )
+                    })
+            )
+        }
+    }
+
     override fun pauseTimer() {
         countDownTimer.cancel()
     }

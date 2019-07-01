@@ -18,6 +18,7 @@ import com.google.android.gms.ads.MobileAds
 import com.rainads.rainadsapp.R
 import com.rainads.rainadsapp.ui.base.view.BaseActivity
 import com.rainads.rainadsapp.ui.watchad.interactor.IWatchAdInteractor
+import com.rainads.rainadsapp.ui.watchad.presenter.IWatchAdPresenter
 import com.rainads.rainadsapp.ui.watchad.presenter.WatchAdPresenter
 import com.rainads.rainadsapp.util.AppUtils
 import com.rainads.rainadsapp.util.MyConstants
@@ -28,9 +29,8 @@ import javax.inject.Inject
 
 class WatchAdActivity : BaseActivity(), WatchAdView {
 
-
     @Inject
-    internal lateinit var presenter: WatchAdPresenter<WatchAdView, IWatchAdInteractor>
+    internal lateinit var presenter: IWatchAdPresenter<WatchAdView, IWatchAdInteractor>
 
     private lateinit var adId: String
     private lateinit var adUrl: String
@@ -104,7 +104,7 @@ class WatchAdActivity : BaseActivity(), WatchAdView {
 
             override fun onAdClosed() {
                 // Code to be executed when the interstitial ad is closed.
-                finish()
+                presenter.watchAdExtra(adId)
             }
         }
     }
@@ -165,6 +165,11 @@ class WatchAdActivity : BaseActivity(), WatchAdView {
         }
     }
 
+    override fun onAdWatchedExtra(type: ToastType, message: String) {
+        AppUtils.showMyToast(layoutInflater, this, message, type)
+        finish()
+    }
+
     private fun askForExtraAd() {
 
         val dialog = Dialog(this)
@@ -172,7 +177,7 @@ class WatchAdActivity : BaseActivity(), WatchAdView {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.setContentView(R.layout.dialog_extra_ad)
 
-        var text = getString(R.string.extra_ad_description, "40")
+        val text = getString(R.string.extra_ad_description, adPrice)
         dialog.tvExtraAdDescription.text = text
 
         dialog.btnYes.setOnClickListener {

@@ -7,4 +7,5 @@ interface WatchAdView : MVPView {
     fun onTimerTick(progress: Int, secondsUntilFinish: String)
     fun onTimerFinished()
     fun onAdWatched(type: ToastType, message: String)
+    fun onAdWatchedExtra(type: ToastType, message: String)
 }

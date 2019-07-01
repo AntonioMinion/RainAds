@@ -19,7 +19,7 @@ class MainPresenter<V : MainMVPView, I : MainMVPInteractor> @Inject internal con
 ), MainMVPPresenter<V, I> {
 
 
-    private fun getUser() {
+    override fun getUser() {
         getView()?.showProgress()
         interactor?.let {
             compositeDisposable.add(

@@ -221,7 +221,7 @@ class MainActivity : BaseActivity(), MainMVPView {
         dialogView.tv_ad_duration.text =
                 if (theAd.duration.isNullOrEmpty()) "/" else theAd.duration
 
-        dialogView.tv_ad_price.text = if (theAd.price.isNullOrEmpty()) "/" else theAd.price
+        dialogView.tv_ad_price.text = if (theAd.price.isNullOrEmpty()) "/" else (theAd.price.toInt()/2).toString()
 
         dialogView.ll_ad_price.setOnClickListener {
             dialog.dismiss()
@@ -229,7 +229,7 @@ class MainActivity : BaseActivity(), MainMVPView {
             i.putExtra(MyConstants.EXTRA_AD_URL, theAd.url)
             i.putExtra(MyConstants.EXTRA_AD_ID, theAd.id)
             i.putExtra(MyConstants.EXTRA_AD_DURATION, theAd.duration?.toLong())
-            i.putExtra(MyConstants.EXTRA_AD_PRICE, theAd.price.toInt())
+            i.putExtra(MyConstants.EXTRA_AD_PRICE, theAd.price.toInt()/2)
             startActivityForResult(i, MyConstants.REQUEST_RESULT_WATCH_AD)
         }
 
@@ -241,8 +241,8 @@ class MainActivity : BaseActivity(), MainMVPView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && !lastOpenedAd.price.isNullOrEmpty()) {
-            tv_balance.text = (tv_balance.text.toString().toInt() + lastOpenedAd.price.toInt()).toString()
+        if (resultCode == Activity.RESULT_OK) {
+            presenter.getUser()
         }
     }
 

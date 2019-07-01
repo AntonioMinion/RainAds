@@ -16,7 +16,7 @@
     <string name="market">Market</string>
     <string name="network">Network</string>
     <string name="withdraw">Withdraw</string>
-    <string name="satoshi">Satoshi</string>
+    <string name="satoshi">satoshi</string>
     <string name="balance">Balance</string>
     <string name="advertise">Advertise</string>
     <string name="watch_ad">Watch Ad</string>
@@ -60,7 +60,8 @@
     <string name="important">Important!</string>
     <string name="no">No</string>
     <string name="yes_i_want_50_more">YES, I WANT 50% MORE</string>
-    <string name="extra_ad_description">You have just earned %1$s satoshi!\nDo you want to earn additional <b>50%%</b>?</string>
+    <string name="extra_ad_description">You have just earned %1$d satoshi!\nDo you want to earn additional <b>50%%</b>?</string>
+    <string name="seconds">seconds</string>
 
     <string-array name="ad_price_duration_list">
         <item>15 seconds/35 satoshi</item>
