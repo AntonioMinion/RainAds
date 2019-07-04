@@ -13,14 +13,6 @@
         android:layout_marginEnd="24dp"
         android:orientation="horizontal">
 
-
-        <View
-            android:id="@+id/view_ad_status"
-            android:layout_width="14dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/my_ad_denied"
-            android:visibility="gone" />
-
         <LinearLayout
             android:id="@+id/ll_ad_container"
             android:layout_width="match_parent"

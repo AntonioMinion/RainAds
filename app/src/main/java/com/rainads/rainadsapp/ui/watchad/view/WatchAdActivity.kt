@@ -11,15 +11,15 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.reward.RewardItem
+import com.google.android.gms.ads.reward.RewardedVideoAd
+import com.google.android.gms.ads.reward.RewardedVideoAdListener
 import com.rainads.rainadsapp.R
 import com.rainads.rainadsapp.ui.base.view.BaseActivity
 import com.rainads.rainadsapp.ui.watchad.interactor.IWatchAdInteractor
 import com.rainads.rainadsapp.ui.watchad.presenter.IWatchAdPresenter
-import com.rainads.rainadsapp.ui.watchad.presenter.WatchAdPresenter
 import com.rainads.rainadsapp.util.AppUtils
 import com.rainads.rainadsapp.util.MyConstants
 import com.rainads.rainadsapp.util.ToastType
@@ -27,7 +27,8 @@ import kotlinx.android.synthetic.main.activity_watch_ad.*
 import kotlinx.android.synthetic.main.dialog_extra_ad.*
 import javax.inject.Inject
 
-class WatchAdActivity : BaseActivity(), WatchAdView {
+class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
+
 
     @Inject
     internal lateinit var presenter: IWatchAdPresenter<WatchAdView, IWatchAdInteractor>
@@ -39,7 +40,7 @@ class WatchAdActivity : BaseActivity(), WatchAdView {
 
     private var adWatched = false
 
-    private lateinit var mInterstitialAd: InterstitialAd
+    private lateinit var mRewardedVideoAd: RewardedVideoAd
 
     override fun onFragmentAttached() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -70,44 +71,17 @@ class WatchAdActivity : BaseActivity(), WatchAdView {
         MobileAds.initialize(this,
                 "ca-app-pub-3940256099942544~3347511713")
 
-        mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
-        btnTestAd.setOnClickListener {
-            if (mInterstitialAd.isLoaded) {
-                mInterstitialAd.show()
-            } else {
-                AppUtils.showMyToast(layoutInflater, this, "Ad isn't loaded yet.", ToastType.INFO)
-            }
-        }
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
+        mRewardedVideoAd.rewardedVideoAdListener = this
 
-        mInterstitialAd.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-            }
-
-            override fun onAdFailedToLoad(errorCode: Int) {
-                // Code to be executed when an ad request fails.
-            }
-
-            override fun onAdOpened() {
-                // Code to be executed when the ad is displayed.
-            }
-
-            override fun onAdClicked() {
-                // Code to be executed when the user clicks on an ad.
-            }
-
-            override fun onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            override fun onAdClosed() {
-                // Code to be executed when the interstitial ad is closed.
-                presenter.watchAdExtra(adId)
-            }
-        }
+        loadRewardedVideoAd()
     }
+
+    private fun loadRewardedVideoAd() {
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+                AdRequest.Builder().build())
+    }
+
 
     private fun getExtras() {
         val bundle = intent.extras
@@ -124,17 +98,6 @@ class WatchAdActivity : BaseActivity(), WatchAdView {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (!adWatched)
-            presenter.startTimer(adId, adDuration)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (!adWatched)
-            presenter.pauseTimer()
-    }
 
     override fun onTimerTick(progress: Int, secondsUntilFinish: String) {
         progressBarTimer.progress = progress
@@ -183,8 +146,8 @@ class WatchAdActivity : BaseActivity(), WatchAdView {
         dialog.btnYes.setOnClickListener {
             dialog.dismiss()
 
-            if (mInterstitialAd.isLoaded) {
-                mInterstitialAd.show()
+            if (mRewardedVideoAd.isLoaded) {
+                mRewardedVideoAd.show()
             } else {
                 AppUtils.showMyToast(layoutInflater, this, "Ad isn't loaded yet.", ToastType.INFO)
             }
@@ -277,4 +240,57 @@ class WatchAdActivity : BaseActivity(), WatchAdView {
 
         webView.loadUrl(adUrl)
     }
+
+
+    override fun onPause() {
+        super.onPause()
+        if (!adWatched)
+            presenter.pauseTimer()
+        mRewardedVideoAd.pause(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!adWatched)
+            presenter.startTimer(adId, adDuration)
+        mRewardedVideoAd.resume(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mRewardedVideoAd.destroy(this)
+    }
+
+    override fun onRewardedVideoCompleted() {
+        //non implemented
+    }
+
+    override fun onRewardedVideoAdClosed() {
+        presenter.watchAdExtra(adId)
+    }
+
+    override fun onRewardedVideoAdLeftApplication() {
+        //non implemented
+    }
+
+    override fun onRewardedVideoAdLoaded() {
+        //non implemented
+    }
+
+    override fun onRewardedVideoAdOpened() {
+        //non implemented
+    }
+
+    override fun onRewarded(p0: RewardItem?) {
+        //non implemented
+    }
+
+    override fun onRewardedVideoStarted() {
+        //non implemented
+    }
+
+    override fun onRewardedVideoAdFailedToLoad(p0: Int) {
+        //non implemented
+    }
+
 }

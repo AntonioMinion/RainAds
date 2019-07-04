@@ -179,6 +179,21 @@ class MyAdsListAdapter(private val myAdsListItems: MutableList<AdModel>) :
                                 0
                         )
                     }
+                    it.equals(
+                            AdStatus.INSUFFICIENT_FOUNDS.toString().replace("_"," "),
+                            ignoreCase = true
+                    ) -> {
+                        itemView.btn_my_ad_start_pause.isEnabled = false
+                        itemView.btn_my_ad_start_pause.alpha = 0.5f
+
+                        itemView.tv_my_ad_status.setTextColor(Color.parseColor("#e53935"))
+                        itemView.tv_my_ad_status.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                R.drawable.ic_no_funds,
+                                0,
+                                0,
+                                0
+                        )
+                    }
                     else -> {
                         itemView.btn_my_ad_start_pause.isEnabled = false
                         itemView.btn_my_ad_start_pause.alpha = 0.5f

@@ -88,6 +88,8 @@ class MainActivity : BaseActivity(), MainMVPView {
         clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
         setOnClickListeners()
         setupBalancesSpinner()
+
+        ivRefresh.setOnClickListener { presenter.getUser() }
     }
 
     override fun userDownloaded(user: User) {
