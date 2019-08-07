@@ -37,8 +37,6 @@ import kotlinx.android.synthetic.main.bottom_sheet_profile.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_profile.view.ivClose
 import kotlinx.android.synthetic.main.dashboard_main_card.*
 import kotlinx.android.synthetic.main.dialog_full_qr_code.*
-import kotlinx.android.synthetic.main.dialog_full_qr_code.view.*
-import kotlinx.android.synthetic.main.dialog_full_qr_code.view.ivQrCode
 import kotlinx.android.synthetic.main.dialog_logout.*
 import kotlinx.android.synthetic.main.main_content.*
 import javax.inject.Inject
@@ -58,6 +56,8 @@ class MainActivity : BaseActivity(), MainMVPView {
 
     private lateinit var lastOpenedAd: AdModel
     private var mUser = User()
+
+    private var profileBottomSheetDialog: BottomSheetDialog? = null
 
     lateinit var mainHandler: Handler
     private val pagerList = ArrayList<String>()
@@ -184,16 +184,16 @@ class MainActivity : BaseActivity(), MainMVPView {
     @SuppressLint("InflateParams")
     private fun showProfileBottomSheet() {
         val dialogView = layoutInflater.inflate(R.layout.bottom_sheet_profile, null)
-        val dialog = BottomSheetDialog(this, R.style.SheetDialog)
+        profileBottomSheetDialog = BottomSheetDialog(this, R.style.SheetDialog)
         dialogView.tv_referral_code.text = referralCode
         dialogView.tv_btc_address.text = btcAddress
         if (bitmap != null)
             dialogView.ivQrCodeSmall.setImageBitmap(bitmap)
         else
             dialogView.ivQrCodeSmall.visibility = View.GONE
-        setBottomMenuClickListeners(dialogView, dialog)
-        dialog.setContentView(dialogView)
-        dialog.show()
+        setBottomMenuClickListeners(dialogView, profileBottomSheetDialog!!)
+        profileBottomSheetDialog!!.setContentView(dialogView)
+        profileBottomSheetDialog!!.show()
     }
 
     @SuppressLint("InflateParams")
@@ -284,6 +284,8 @@ class MainActivity : BaseActivity(), MainMVPView {
 
         dialog.btnLogOut.setOnClickListener {
             dialog.dismiss()
+            if (profileBottomSheetDialog != null)
+                profileBottomSheetDialog!!.dismiss()
             logout()
         }
 

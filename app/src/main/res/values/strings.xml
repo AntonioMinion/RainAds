@@ -81,6 +81,9 @@
     <string name="success">Success</string>
     <string name="info">Info</string>
     <string name="receiving_btc_address">Receiving BTC Address</string>
+    <string name="havent_received_email">If you haven\'t received an email yet, you can try resending it.</string>
+    <string name="please_confirm_your_email">Please confirm your email</string>
+    <string name="withdraw_limit_info">Minimum withdraw limit is 10,000 Satoshi!</string>
 
     <string-array name="ad_price_duration_list">
         <item>15 seconds/35 satoshi</item>

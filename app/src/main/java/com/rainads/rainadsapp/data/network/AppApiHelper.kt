@@ -13,18 +13,18 @@ import javax.inject.Inject
 class AppApiHelper @Inject constructor(private val preferenceHelper: PreferenceHelper) : ApiCalls {
 
     //USER
-    override fun registerCall(request: RegisterRequest): Observable<User> =
+    override fun registerCall(request: RegisterRequest): Observable<String> =
             Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_SERVER_REGISTER)
                     .addBodyParameter(request)
                     .build()
-                    .getObjectObservable(User::class.java)
+                    .stringObservable
 
 
-    override fun loginCall(request: LoginRequest): Observable<User> =
+    override fun loginCall(request: LoginRequest): Observable<LoginResponse> =
             Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_SERVER_LOGIN)
                     .addBodyParameter(request)
                     .build()
-                    .getObjectObservable(User::class.java)
+                    .getObjectObservable(LoginResponse::class.java)
 
     override fun getUser(request: String): Observable<User> =
             Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_GET_USER)
@@ -79,4 +79,10 @@ class AppApiHelper @Inject constructor(private val preferenceHelper: PreferenceH
             Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_SATOSHI_LIST)
                     .build()
                     .getObjectListObservable(SatoshiResponse::class.java)
+
+    override fun resendConfirmEmail(request: ResendEmailRequest): Observable<String> =
+            Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_RESEND_CONFIRM_EMAIL)
+                    .addBodyParameter(request)
+                    .build()
+                    .stringObservable
 }

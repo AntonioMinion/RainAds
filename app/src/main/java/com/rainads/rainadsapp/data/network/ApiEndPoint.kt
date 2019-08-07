@@ -14,4 +14,5 @@ object ApiEndPoint {
     const val ENDPOINT_SATOSHI_LIST = BuildConfig.BASE_URL + "/satoshiList"
     const val ENDPOINT_DEPOSIT = BuildConfig.BASE_URL + "/transferToRainAds"
     const val ENDPOINT_WITHDRAW = BuildConfig.BASE_URL + "/withdrawl"
+    const val ENDPOINT_RESEND_CONFIRM_EMAIL = BuildConfig.BASE_URL + "/resendEmailVerification"
 }

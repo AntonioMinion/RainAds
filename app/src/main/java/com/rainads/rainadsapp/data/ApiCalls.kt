@@ -5,8 +5,8 @@ import io.reactivex.Observable
 import org.json.JSONObject
 
 interface ApiCalls {
-    fun loginCall(request: LoginRequest): Observable<User>
-    fun registerCall(request: RegisterRequest): Observable<User>
+    fun loginCall(request: LoginRequest): Observable<LoginResponse>
+    fun registerCall(request: RegisterRequest): Observable<String>
     fun getUser(request: String): Observable<User>
     fun getAd(): Observable<AdModel>
     fun createAd(request: NewAdRequest): Observable<String>
@@ -15,4 +15,5 @@ interface ApiCalls {
     fun watchAd(request: WatchAdRequest): Observable<String>
     fun changeAdStatus(request: PlayAdRequest): Observable<JSONObject>
     fun getSatoshiList(): Observable<List<SatoshiResponse>>
+    fun resendConfirmEmail(request: ResendEmailRequest): Observable<String>
 }

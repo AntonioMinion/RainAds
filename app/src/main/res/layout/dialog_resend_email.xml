@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    android:background="@drawable/background_rounded_corners_12"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/please_confirm_your_email"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:lineSpacingExtra="4dp"
+        android:text="@string/havent_received_email"
+        android:textColor="@color/colorPrimaryLight"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnResendEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:background="@drawable/button_green_normal"
+            android:text="Resend Email"
+            android:textColor="@color/white" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:background="@android:color/transparent"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="@string/ok"
+            android:textColor="@color/colorPrimaryLight" />
+    </LinearLayout>
+
+</LinearLayout>

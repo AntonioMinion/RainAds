@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    android:background="@drawable/background_rounded_corners_12"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tvDialogInfoTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/info"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDialogInfoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:text="@string/success"
+        android:textColor="@color/colorPrimaryLight"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnOk"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="24dp"
+        android:background="@android:color/transparent"
+        android:gravity="end|center_vertical"
+        android:text="@string/ok"
+        android:textColor="@color/colorPrimaryLight"
+        android:textStyle="bold" />
+
+</LinearLayout>

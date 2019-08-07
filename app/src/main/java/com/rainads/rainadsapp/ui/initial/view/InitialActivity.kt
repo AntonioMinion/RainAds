@@ -13,6 +13,7 @@ import android.widget.Button
 import androidx.core.content.ContextCompat
 import com.rainads.rainadsapp.R
 import com.rainads.rainadsapp.data.network.models.Country
+import com.rainads.rainadsapp.data.network.models.ResendEmailRequest
 import com.rainads.rainadsapp.ui.base.view.BaseActivity
 import com.rainads.rainadsapp.ui.initial.interactor.InitialMVPInteractor
 import com.rainads.rainadsapp.ui.initial.presenter.InitialMVPPresenter
@@ -22,6 +23,7 @@ import com.rainads.rainadsapp.util.*
 import com.rainads.rainadsapp.util.AppUtils.hideKeyboard
 import kotlinx.android.synthetic.main.activity_initial.*
 import kotlinx.android.synthetic.main.dialog_custom_referral_code.*
+import kotlinx.android.synthetic.main.dialog_resend_email.*
 import javax.inject.Inject
 
 
@@ -67,8 +69,45 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
         spinner_countries?.adapter = adapter
     }
 
-    override fun showValidationMessage(errorCode: Int) {
+    override fun showErrorMessage(errorCode: Int) {
         AppUtils.showMySnackBar(ll_container, Handler.getErrorMessage(errorCode), SnackBarType.ERROR)
+    }
+
+    override fun showMessage(type: ToastType, message: String, token: String) {
+        if (type == ToastType.ERROR) {
+            openEmailConfirmationDialog(token)
+        } else {
+            AppUtils.showMyToast(layoutInflater, this, message, type)
+            if (type == ToastType.INFO) {
+                clearFields()
+                menu_login.callOnClick()
+            }
+        }
+    }
+
+    private fun openEmailConfirmationDialog(token: String) {
+        dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setContentView(R.layout.dialog_resend_email)
+
+        dialog.btnOk.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.btnResendEmail.setOnClickListener {
+            dialog.dismiss()
+            presenter.onResendEmail(ResendEmailRequest(token))
+        }
+
+        dialog.show()
+    }
+
+
+    private fun clearFields() {
+        et_email.setText("")
+        et_password.setText("")
+        et_confirm_password.setText("")
     }
 
     override fun openMainActivity() {
