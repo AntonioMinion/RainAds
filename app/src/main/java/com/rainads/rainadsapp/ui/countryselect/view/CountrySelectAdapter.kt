@@ -81,8 +81,8 @@ class CountrySelectAdapter(private val list: MutableList<Country>) :
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun clear() {
-            itemView.tv_country_name.text = ""
-            itemView.tv_country_name
+            itemView.tv_spinner_dropdown_text.text = ""
+            itemView.tv_spinner_dropdown_text
                 .setCompoundDrawablesRelativeWithIntrinsicBounds(
                     0,
                     0,
@@ -113,11 +113,11 @@ class CountrySelectAdapter(private val list: MutableList<Country>) :
             countryName: String?,
             isSelected: Boolean?
         ) {
-            countryName?.let { itemView.tv_country_name.text = it }
+            countryName?.let { itemView.tv_spinner_dropdown_text.text = it }
             isSelected?.let {
                 if (it) {
-                    itemView.tv_country_name.setTypeface(null, Typeface.BOLD)
-                    itemView.tv_country_name
+                    itemView.tv_spinner_dropdown_text.setTypeface(null, Typeface.BOLD)
+                    itemView.tv_spinner_dropdown_text
                         .setCompoundDrawablesRelativeWithIntrinsicBounds(
                             0,
                             0,
@@ -125,8 +125,8 @@ class CountrySelectAdapter(private val list: MutableList<Country>) :
                             0
                         )
                 } else {
-                    itemView.tv_country_name.setTypeface(null, Typeface.NORMAL)
-                    itemView.tv_country_name
+                    itemView.tv_spinner_dropdown_text.setTypeface(null, Typeface.NORMAL)
+                    itemView.tv_spinner_dropdown_text
                         .setCompoundDrawablesRelativeWithIntrinsicBounds(
                             0,
                             0,

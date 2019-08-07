@@ -9,7 +9,7 @@ import dagger.android.support.AndroidSupportInjection
 
 abstract class BaseDialogView : DialogFragment(), DialogMVPView {
 
-    private var parentActivity: BaseActivity? = null
+    var parentActivity: BaseActivity? = null
     private var progressDialog: ProgressDialog? = null
 
     override fun onAttach(context: Context) {

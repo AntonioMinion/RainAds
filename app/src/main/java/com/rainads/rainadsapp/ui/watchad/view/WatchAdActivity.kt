@@ -69,7 +69,7 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
 
 
         MobileAds.initialize(this,
-                "ca-app-pub-3940256099942544~3347511713")
+                "ca-app-pub-6953773192251170~7601411476")
 
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
         mRewardedVideoAd.rewardedVideoAdListener = this
@@ -78,7 +78,7 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
     }
 
     private fun loadRewardedVideoAd() {
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+        mRewardedVideoAd.loadAd("ca-app-pub-6953773192251170/1327524421",
                 AdRequest.Builder().build())
     }
 

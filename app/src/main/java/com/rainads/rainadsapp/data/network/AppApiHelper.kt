@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 class AppApiHelper @Inject constructor(private val preferenceHelper: PreferenceHelper) : ApiCalls {
 
-
     //USER
     override fun registerCall(request: RegisterRequest): Observable<User> =
             Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_SERVER_REGISTER)
@@ -61,4 +60,23 @@ class AppApiHelper @Inject constructor(private val preferenceHelper: PreferenceH
                     .build()
                     .jsonObjectObservable
 
+    override fun sendDepositRequest(request: DepositRequest): Observable<String> =
+            Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_DEPOSIT)
+                    .addBodyParameter(request)
+                    .addHeaders(ApiHeader.ProtectedApiHeader(preferenceHelper.getAccessToken()))
+                    .build()
+                    .stringObservable
+
+
+    override fun sendWithdrawRequest(request: WithdrawRequest): Observable<String> =
+            Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_WITHDRAW)
+                    .addBodyParameter(request)
+                    .addHeaders(ApiHeader.ProtectedApiHeader(preferenceHelper.getAccessToken()))
+                    .build()
+                    .stringObservable
+
+    override fun getSatoshiList(): Observable<List<SatoshiResponse>> =
+            Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_SATOSHI_LIST)
+                    .build()
+                    .getObjectListObservable(SatoshiResponse::class.java)
 }

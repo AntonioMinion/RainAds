@@ -7,5 +7,4 @@ import com.rainads.rainadsapp.ui.base.view.MVPView
 interface CountrySelectDialogMVPView : MVPView {
     fun loadCountries(countries: List<Country>)
     fun dismissDialog()
-    fun showRatingSubmissionSuccessMessage()
 }

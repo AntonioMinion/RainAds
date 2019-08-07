@@ -166,4 +166,5 @@ object AppUtils {
         list.forEachIndexed { index, it -> text += it + (if (index == list.size - 1) "" else ", ") }
         return text
     }
+
 }

@@ -6,12 +6,15 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rainads.rainadsapp.R
-import com.rainads.rainadsapp.data.network.models.AdModel
+import com.rainads.rainadsapp.data.network.models.User
 import com.rainads.rainadsapp.ui.addad.view.AddAdActivity
 import com.rainads.rainadsapp.ui.base.view.BaseActivity
+import com.rainads.rainadsapp.ui.deposit.view.DepositActivity
 import com.rainads.rainadsapp.ui.myadlist.interactor.IMyAdListInteractor
 import com.rainads.rainadsapp.ui.myadlist.presenter.MyAdListPresenter
+import com.rainads.rainadsapp.ui.watchad.view.WatchAdActivity
 import com.rainads.rainadsapp.util.AppUtils
+import com.rainads.rainadsapp.util.MyConstants
 import com.rainads.rainadsapp.util.ToastType
 import kotlinx.android.synthetic.main.activity_my_ad_list.*
 import kotlinx.android.synthetic.main.custom_back_button.*
@@ -66,6 +69,12 @@ class MyAdListActivity : BaseActivity(), MyAdListView, MyAdsListAdapter.AdStatus
         btnNewAd.setOnClickListener { btn_add_new_ad.callOnClick() }
 
         btnBack.setOnClickListener { onBackPressed() }
+
+        tvDepositBtn.setOnClickListener {
+            val i = Intent(this, DepositActivity::class.java)
+            i.putExtra(MyConstants.EXTRA_IS_DEPOSIT, true)
+            startActivity(i)
+        }
     }
 
     override fun showMessage(type: ToastType, message: String?) {
@@ -78,10 +87,12 @@ class MyAdListActivity : BaseActivity(), MyAdListView, MyAdsListAdapter.AdStatus
         presenter.adStatusChanged(campaignId, newStatus)
     }
 
-    override fun displayMyAdsList(adList: List<AdModel>?) {
+    override fun userDownloaded(user: User) {
         swipeContainer.isRefreshing = false
 
-        adList?.let {
+        val adList = user.myCampaigns!!.reversed()
+
+        adList.let {
             myAdListAdapter.addAdsToList(it)
             if (it.isEmpty()) {
                 btnNewAd.visibility = View.VISIBLE
@@ -93,6 +104,8 @@ class MyAdListActivity : BaseActivity(), MyAdListView, MyAdsListAdapter.AdStatus
                 btn_add_new_ad.visibility = View.VISIBLE
             }
         }
+
+        tvMyAdsBalance.text = if (user.balance.isNullOrEmpty()) "0" else user.balance
     }
 
 }

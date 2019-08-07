@@ -6,6 +6,6 @@ import io.reactivex.Observable
 import org.json.JSONObject
 
 interface IMyAdListInteractor : MVPInteractor {
-    fun getMyAdList(): Observable<User>
+    fun getUser(): Observable<User>
     fun changeAdStatus(id: String, newStatus: String): Observable<JSONObject>
 }

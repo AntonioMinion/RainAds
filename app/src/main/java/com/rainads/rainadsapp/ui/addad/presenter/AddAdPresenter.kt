@@ -22,6 +22,23 @@ class AddAdPresenter<V : AddAdView, I : IAddAdInteractor>
     compositeDisposable = disposable
 ), IAddAdPresenter<V, I> {
 
+    override fun onAttach(view: V?) {
+        super.onAttach(view)
+        getOptionsList()
+    }
+
+    private fun getOptionsList(){
+        interactor?.let {
+            it.getOptionsList()
+                    .compose(schedulerProvider.ioToMainObservableScheduler())
+                    .subscribe { list ->
+                        getView()?.let { it ->
+                            it.hideProgress()
+                            it.loadOptions(list)
+                        }
+                    }
+        }
+    }
 
     override fun saveAd(
         adUrl: String,

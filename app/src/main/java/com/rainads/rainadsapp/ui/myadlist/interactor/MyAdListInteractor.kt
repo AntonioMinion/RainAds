@@ -19,5 +19,5 @@ class MyAdListInteractor @Inject internal constructor(
     IMyAdListInteractor {
     override fun changeAdStatus(id: String, newStatus: String): Observable<JSONObject> = apiCalls.changeAdStatus(PlayAdRequest(id, newStatus))
 
-    override fun getMyAdList(): Observable<User> = apiCalls.getUser(preferenceHelper.getAccessToken()!!)
+    override fun getUser(): Observable<User> = apiCalls.getUser(preferenceHelper.getAccessToken()!!)
 }

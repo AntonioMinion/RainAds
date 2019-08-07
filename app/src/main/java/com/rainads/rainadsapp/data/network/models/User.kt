@@ -26,6 +26,10 @@ data class User(
     var balance: String? = null,
 
     @Expose
+    @SerializedName("btcBalance")
+    var btcBalance: String? = null,
+
+    @Expose
     @SerializedName("myCampagins")
     var myCampaigns: List<AdModel>? = null,
 

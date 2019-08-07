@@ -1,78 +1,63 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="124dp"
-    android:layout_marginStart="32dp"
     android:layout_marginTop="12dp"
-    android:layout_marginEnd="32dp"
     android:layout_marginBottom="12dp"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/bg_abstract" />
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/menu_item_gradient_background">
 
-    <TextView
-        android:id="@+id/tvDashboardChosenBalance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/tv_balance"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="4dp"
-        android:gravity="center"
-        android:textAllCaps="true"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="14sp"
-        tools:text="Balance" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tvAmountAvailable"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="@string/balance"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/tvArrowDropdown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tvDashboardChosenBalance"
-        android:layout_alignBottom="@id/tvDashboardChosenBalance"
-        android:layout_toEndOf="@id/tvDashboardChosenBalance"
-        android:drawableEnd="@drawable/ic_arrow_drop_down_black" />
+        <TextView
+            android:id="@+id/tvAmountAvailable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/zero"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:textStyle="bold" />
 
-    <Spinner
-        android:id="@+id/spinner_balances"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@id/tvDashboardChosenBalance"
-        android:layout_alignTop="@id/tvDashboardChosenBalance"
-        android:layout_alignEnd="@id/tvArrowDropdown"
-        android:layout_alignBottom="@id/tvDashboardChosenBalance"
-        android:layout_centerHorizontal="true"
-        android:background="@android:color/transparent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvAmountAvailable"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/roboto_light"
+            android:text="@string/satoshi"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/tv_balance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/zero"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="32sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_balance"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="4dp"
-        android:text="@string/satoshi"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/ivRefresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:contentDescription="@string/refresh"
         android:src="@drawable/ic_refresh" />
+
 </RelativeLayout>

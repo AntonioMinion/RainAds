@@ -36,13 +36,94 @@
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/menu_item_gradient_background"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_above="@id/tvMyAdsBalance"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="4dp"
+                            android:gravity="center"
+                            android:text="@string/balance"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvMyAdsBalance"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/roboto_bold"
+                            android:gravity="center"
+                            android:text="@string/zero"
+                            android:textColor="@color/white"
+                            android:textSize="24sp"
+
+                            android:textStyle="bold"
+                            app:autoSizeMaxTextSize="32sp"
+                            app:autoSizeMinTextSize="8sp"
+                            app:autoSizeTextType="uniform" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvMyAdsBalance"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/roboto_light"
+                            android:text="@string/satoshi"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvDepositBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/menu_item_background"
+                            android:drawableStart="@drawable/ic_withdraw_dark"
+                            android:drawablePadding="8dp"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="@string/deposit"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewMyAds"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
                     android:nestedScrollingEnabled="false"
-                    android:paddingTop="12dp"
                     android:paddingBottom="124dp"
                     tools:listitem="@layout/item_my_ad" />
 

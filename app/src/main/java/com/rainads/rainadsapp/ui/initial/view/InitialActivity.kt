@@ -1,5 +1,6 @@
 package com.rainads.rainadsapp.ui.initial.view
 
+import android.Manifest
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.PorterDuff
@@ -16,45 +17,47 @@ import com.rainads.rainadsapp.ui.base.view.BaseActivity
 import com.rainads.rainadsapp.ui.initial.interactor.InitialMVPInteractor
 import com.rainads.rainadsapp.ui.initial.presenter.InitialMVPPresenter
 import com.rainads.rainadsapp.ui.main.view.MainActivity
-import com.rainads.rainadsapp.util.AppUtils
+import com.rainads.rainadsapp.ui.scanner.view.ScannerDialog
+import com.rainads.rainadsapp.util.*
 import com.rainads.rainadsapp.util.AppUtils.hideKeyboard
-import com.rainads.rainadsapp.util.Handler
-import com.rainads.rainadsapp.util.MyConstants
-import com.rainads.rainadsapp.util.SnackBarType
 import kotlinx.android.synthetic.main.activity_initial.*
 import kotlinx.android.synthetic.main.dialog_custom_referral_code.*
 import javax.inject.Inject
 
 
-class InitialActivity : BaseActivity(), InitialMVPView {
+class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinishedListener, BaseActivity.PermissionRequestListener {
 
     @Inject
     internal lateinit var presenter: InitialMVPPresenter<InitialMVPView, InitialMVPInteractor>
 
     private var isSignUp: Boolean = true
 
+    private lateinit var dialog: Dialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial)
+
+        setPermissionRequestListener(this)
 
         window.enterTransition = null
 
         presenter.onAttach(this)
 
         spinner_countries.background.setColorFilter(
-            ContextCompat.getColor(this, R.color.white),
-            PorterDuff.Mode.SRC_ATOP
+                ContextCompat.getColor(this, R.color.white),
+                PorterDuff.Mode.SRC_ATOP
         )
 
         setOnClickListeners()
     }
 
     override fun onFragmentAttached() {
-        TODO("not implemented")
+        //non implemented
     }
 
     override fun onFragmentDetached(tag: String) {
-        TODO("not implemented")
+        //non implemented
     }
 
     override fun loadCountries(countries: List<Country>) {
@@ -75,32 +78,61 @@ class InitialActivity : BaseActivity(), InitialMVPView {
     }
 
     private fun askForReferralCode() {
-        val dialog = Dialog(this)
+        dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.setCancelable(false)
         dialog.setContentView(R.layout.dialog_custom_referral_code)
 
-        dialog.btnSkip.setOnClickListener {
-            dialog.dismiss()
-            registerUser("")
-        }
-
+        /*      dialog.btnSkip.setOnClickListener {
+                  dialog.dismiss()
+                  registerUser("")
+              }
+      */
         dialog.btnSave.setOnClickListener {
             dialog.dismiss()
             registerUser(dialog.etReferral.text.toString())
         }
 
+        dialog.btnScanCode.setOnClickListener {
+            openCameraToScan()
+        }
+
         dialog.show()
+    }
+
+    private fun openCameraToScan() {
+        if (hasPermission(Manifest.permission.CAMERA)) {
+            ScannerDialog.newInstance().let {
+                it?.show(supportFragmentManager)
+                it?.setListener(this)
+            }
+        } else {
+            requestPermission(Manifest.permission.CAMERA, MyConstants.CAMERA_REQUEST_CODE)
+        }
+    }
+
+    override fun onPermissionGranted() {
+        openCameraToScan()
+    }
+
+
+    override fun onScanSuccessful(refCode: String) {
+        if (dialog.isShowing) {
+            dialog.etReferral.setText(refCode)
+        }
+    }
+
+    override fun onScanError(errorMsg: String) {
+        AppUtils.showMyToast(layoutInflater, this, errorMsg, ToastType.ERROR)
     }
 
     private fun registerUser(referral: String) {
         presenter.onRegisterClicked(
-            et_email.text.toString(),
-            et_password.text.toString(),
-            et_confirm_password.text.toString(),
-            spinner_countries.selectedItem.toString(),
-            referral
+                et_email.text.toString(),
+                et_password.text.toString(),
+                et_confirm_password.text.toString(),
+                spinner_countries.selectedItem.toString(),
+                referral
         )
     }
 
@@ -141,8 +173,8 @@ class InitialActivity : BaseActivity(), InitialMVPView {
                     askForReferralCode()
                 else {
                     presenter.onLoginClicked(
-                        et_email.text.toString(),
-                        et_password.text.toString()
+                            et_email.text.toString(),
+                            et_password.text.toString()
                     )
                 }
             } else {

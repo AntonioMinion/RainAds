@@ -43,12 +43,12 @@ class MyAdListPresenter<V : MyAdListView, I : IMyAdListInteractor>
     override fun onViewPrepared() {
         getView()?.showProgress()
         interactor?.let {
-            compositeDisposable.add(it.getMyAdList()
+            compositeDisposable.add(it.getUser()
                     .compose(schedulerProvider.ioToMainObservableScheduler())
                     .subscribe { user ->
                         getView()?.let { it ->
                             it.hideProgress()
-                            it.displayMyAdsList(user.myCampaigns!!.reversed())
+                            it.userDownloaded(user)
                         }
                     })
         }

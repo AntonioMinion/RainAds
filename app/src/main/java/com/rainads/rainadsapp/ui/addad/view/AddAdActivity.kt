@@ -1,17 +1,15 @@
 package com.rainads.rainadsapp.ui.addad.view
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import com.rainads.rainadsapp.R
 import com.rainads.rainadsapp.data.network.models.Country
+import com.rainads.rainadsapp.data.network.models.SatoshiResponse
 import com.rainads.rainadsapp.ui.addad.interactor.IAddAdInteractor
 import com.rainads.rainadsapp.ui.addad.presenter.AddAdPresenter
 import com.rainads.rainadsapp.ui.base.view.BaseActivity
 import com.rainads.rainadsapp.ui.countryselect.view.CountrySelectDialog
 import com.rainads.rainadsapp.util.*
-import com.rainads.rainadsapp.util.AppUtils.getDurationValueFromSpinnerItem
-import com.rainads.rainadsapp.util.AppUtils.getPriceValueFromSpinnerItem
+import com.rainads.rainadsapp.util.adapter.CustomArrayAdapter
 import kotlinx.android.synthetic.main.activity_add_ad.*
 import kotlinx.android.synthetic.main.custom_back_button.*
 import java.util.*
@@ -46,7 +44,10 @@ class AddAdActivity : BaseActivity(), AddAdView, CountrySelectDialog.CountriesSa
         presenter.onAttach(this)
 
         setOnClickListeners()
-        setupPriceDurationSpinner()
+    }
+
+    override fun loadOptions(options: List<SatoshiResponse>) {
+        setupPriceDurationSpinner(options)
     }
 
     private fun setOnClickListeners() {
@@ -79,22 +80,19 @@ class AddAdActivity : BaseActivity(), AddAdView, CountrySelectDialog.CountriesSa
 
     private fun saveAd() {
         val adUrl = et_ad_url.text.toString()
-        val adDuration = getDurationValueFromSpinnerItem(spinner_ad_price_duration.selectedItem.toString())
-        val adPrice = getPriceValueFromSpinnerItem(spinner_ad_price_duration.selectedItem.toString())
+        val adDuration = (spinner_ad_price_duration.selectedItem as SatoshiResponse).duration.toString()
+        val adPrice = (spinner_ad_price_duration.selectedItem as SatoshiResponse).satoshi.toString()
         val adDescription = et_ad_description.text.toString()
 
         presenter.saveAd(adUrl, adPrice, adDuration, adDescription, selectedCountries.map { it.name })
     }
 
-    private fun setupPriceDurationSpinner() {
+    private fun setupPriceDurationSpinner(options: List<SatoshiResponse>) {
         val priceDurationAdapter =
-            ArrayAdapter.createFromResource(
-                this
-                , R.array.ad_price_duration_list
-                , R.layout.item_display_spinner_light
-            )
+                CustomArrayAdapter(this, R.layout.item_display_spinner_light, R.id.tv_spinner_text, options)
 
-        priceDurationAdapter.setDropDownViewResource(R.layout.item_spinner_custom)
+        priceDurationAdapter.dropdownLayoutResource = R.layout.item_spinner_custom
+        priceDurationAdapter.dropdownTextResource = R.id.tv_spinner_dropdown_text
 
         spinner_ad_price_duration?.adapter = priceDurationAdapter
     }

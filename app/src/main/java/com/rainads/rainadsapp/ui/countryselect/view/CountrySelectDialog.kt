@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -84,7 +83,7 @@ class CountrySelectDialog : BaseDialogView(), CountrySelectDialogMVPView, Countr
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_dialog_countries, container, false)
+            inflater.inflate(R.layout.fragment_dialog_countries, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -122,10 +121,6 @@ class CountrySelectDialog : BaseDialogView(), CountrySelectDialogMVPView, Countr
     }
 
     override fun dismissDialog() = super.dismissDialog(TAG)
-
-    override fun showRatingSubmissionSuccessMessage() =
-        Toast.makeText(context, getString(R.string.satoshi), Toast.LENGTH_LONG).show()
-
 
     internal fun show(fragmentManager: FragmentManager) = super.show(fragmentManager, TAG)
 

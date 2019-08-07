@@ -6,21 +6,23 @@ import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
-import android.graphics.PorterDuff
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.Window
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.google.zxing.WriterException
+import com.google.zxing.common.BitMatrix
 import com.rainads.rainadsapp.R
 import com.rainads.rainadsapp.data.network.models.AdModel
 import com.rainads.rainadsapp.data.network.models.User
 import com.rainads.rainadsapp.ui.base.view.BaseActivity
+import com.rainads.rainadsapp.ui.deposit.view.DepositActivity
 import com.rainads.rainadsapp.ui.initial.view.InitialActivity
 import com.rainads.rainadsapp.ui.levels.view.LevelsActivity
 import com.rainads.rainadsapp.ui.main.interactor.MainMVPInteractor
@@ -34,6 +36,9 @@ import kotlinx.android.synthetic.main.bottom_sheet_ad.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_profile.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_profile.view.ivClose
 import kotlinx.android.synthetic.main.dashboard_main_card.*
+import kotlinx.android.synthetic.main.dialog_full_qr_code.*
+import kotlinx.android.synthetic.main.dialog_full_qr_code.view.*
+import kotlinx.android.synthetic.main.dialog_full_qr_code.view.ivQrCode
 import kotlinx.android.synthetic.main.dialog_logout.*
 import kotlinx.android.synthetic.main.main_content.*
 import javax.inject.Inject
@@ -43,6 +48,8 @@ class MainActivity : BaseActivity(), MainMVPView {
 
     @Inject
     internal lateinit var presenter: MainMVPPresenter<MainMVPView, MainMVPInteractor>
+
+    private var bitmap: Bitmap? = null
 
     private var clipboardManager: ClipboardManager? = null
 
@@ -80,14 +87,8 @@ class MainActivity : BaseActivity(), MainMVPView {
         viewPager.clipToPadding = false
         viewPager.pageMargin = 40
 
-        spinner_balances.background.setColorFilter(
-                ContextCompat.getColor(this, R.color.colorPrimaryDark),
-                PorterDuff.Mode.SRC_ATOP
-        )
-
         clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
         setOnClickListeners()
-        setupBalancesSpinner()
 
         ivRefresh.setOnClickListener { presenter.getUser() }
     }
@@ -98,39 +99,7 @@ class MainActivity : BaseActivity(), MainMVPView {
     }
 
     private fun setBalance() {
-        tv_balance.text = if (mUser.balance.isNullOrEmpty()) "0" else mUser.balance
-    }
-
-    private fun setAdBalance() {
-        tv_balance.text = "0"
-    }
-
-    private fun setupBalancesSpinner() {
-        val balancesAdapter =
-                ArrayAdapter.createFromResource(
-                        this
-                        , R.array.balance_items
-                        , R.layout.item_invisible_text
-                )
-
-        balancesAdapter.setDropDownViewResource(R.layout.item_spinner_custom)
-
-        spinner_balances?.adapter = balancesAdapter
-
-        spinner_balances?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                //not implemented
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                tvDashboardChosenBalance.text = balancesAdapter.getItem(position)?.toString()
-                if (position == 0)
-                    setBalance()
-                else
-                    setAdBalance()
-            }
-
-        }
+        tvAmountAvailable.text = if (mUser.balance.isNullOrEmpty()) "0" else mUser.balance
     }
 
     override fun onPause() {
@@ -164,6 +133,13 @@ class MainActivity : BaseActivity(), MainMVPView {
 
     override fun referralCodeFound(code: String?) {
         referralCode = code
+
+        try {
+            if (!referralCode.isNullOrEmpty())
+                bitmap = generateQrCode(referralCode!!)
+        } catch (e: WriterException) {
+            e.printStackTrace()
+        }
     }
 
     override fun btcAddressFound(btcAddress: String?) {
@@ -188,6 +164,12 @@ class MainActivity : BaseActivity(), MainMVPView {
             val i = Intent(this, LevelsActivity::class.java)
             startActivity(i)
         }
+
+        frameWithdraw.setOnClickListener {
+            val i = Intent(this, DepositActivity::class.java)
+            i.putExtra(MyConstants.EXTRA_IS_DEPOSIT, false)
+            startActivity(i)
+        }
     }
 
     override fun adFound(theAd: AdModel) {
@@ -205,6 +187,10 @@ class MainActivity : BaseActivity(), MainMVPView {
         val dialog = BottomSheetDialog(this, R.style.SheetDialog)
         dialogView.tv_referral_code.text = referralCode
         dialogView.tv_btc_address.text = btcAddress
+        if (bitmap != null)
+            dialogView.ivQrCodeSmall.setImageBitmap(bitmap)
+        else
+            dialogView.ivQrCodeSmall.visibility = View.GONE
         setBottomMenuClickListeners(dialogView, dialog)
         dialog.setContentView(dialogView)
         dialog.show()
@@ -223,7 +209,7 @@ class MainActivity : BaseActivity(), MainMVPView {
         dialogView.tv_ad_duration.text =
                 if (theAd.duration.isNullOrEmpty()) "/" else theAd.duration
 
-        dialogView.tv_ad_price.text = if (theAd.price.isNullOrEmpty()) "/" else (theAd.price.toInt()/2).toString()
+        dialogView.tv_ad_price.text = if (theAd.price.isNullOrEmpty()) "/" else (theAd.price.toInt() / 2).toString()
 
         dialogView.ll_ad_price.setOnClickListener {
             dialog.dismiss()
@@ -231,7 +217,7 @@ class MainActivity : BaseActivity(), MainMVPView {
             i.putExtra(MyConstants.EXTRA_AD_URL, theAd.url)
             i.putExtra(MyConstants.EXTRA_AD_ID, theAd.id)
             i.putExtra(MyConstants.EXTRA_AD_DURATION, theAd.duration?.toLong())
-            i.putExtra(MyConstants.EXTRA_AD_PRICE, theAd.price.toInt()/2)
+            i.putExtra(MyConstants.EXTRA_AD_PRICE, theAd.price.toInt() / 2)
             startActivityForResult(i, MyConstants.REQUEST_RESULT_WATCH_AD)
         }
 
@@ -270,8 +256,14 @@ class MainActivity : BaseActivity(), MainMVPView {
             Toast.makeText(this, getString(com.rainads.rainadsapp.R.string.btc_copied), Toast.LENGTH_SHORT).show()
         }
 
+        //open qr code bigger
+        view.ivQrCodeSmall.setOnClickListener {
+            showFullQrCodeDialog()
+        }
+
+        //logout
         view.ll_logout.setOnClickListener {
-            showDialog()
+            showLogoutDialog()
         }
 
     }
@@ -283,8 +275,7 @@ class MainActivity : BaseActivity(), MainMVPView {
         finish()
     }
 
-    // Method to show an alert dialog with yes, no and cancel button
-    private fun showDialog() {
+    private fun showLogoutDialog() {
 
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -301,5 +292,58 @@ class MainActivity : BaseActivity(), MainMVPView {
         }
 
         dialog.show()
+    }
+
+    private fun showFullQrCodeDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setContentView(R.layout.dialog_full_qr_code)
+
+        dialog.ivQrCode.setImageBitmap(bitmap)
+
+        dialog.ivQrCode.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    @Throws(WriterException::class)
+    private fun generateQrCode(Value: String): Bitmap? {
+        val bitMatrix: BitMatrix
+        try {
+            bitMatrix = MultiFormatWriter().encode(
+                    Value,
+                    BarcodeFormat.QR_CODE,
+                    500, 500, null
+            )
+
+        } catch (Illegalargumentexception: IllegalArgumentException) {
+
+            return null
+        }
+
+        val bitMatrixWidth = bitMatrix.getWidth()
+
+        val bitMatrixHeight = bitMatrix.getHeight()
+
+        val pixels = IntArray(bitMatrixWidth * bitMatrixHeight)
+
+        for (y in 0 until bitMatrixHeight) {
+            val offset = y * bitMatrixWidth
+
+            for (x in 0 until bitMatrixWidth) {
+
+                pixels[offset + x] = if (bitMatrix.get(x, y))
+                    resources.getColor(R.color.black)
+                else
+                    resources.getColor(R.color.white)
+            }
+        }
+        val bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444)
+
+        bitmap.setPixels(pixels, 0, 500, 0, 0, bitMatrixWidth, bitMatrixHeight)
+        return bitmap
     }
 }
