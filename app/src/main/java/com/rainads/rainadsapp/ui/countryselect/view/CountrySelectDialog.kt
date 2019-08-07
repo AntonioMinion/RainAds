@@ -20,6 +20,11 @@ import javax.inject.Inject
 
 
 class CountrySelectDialog : BaseDialogView(), CountrySelectDialogMVPView, CountrySelectAdapter.SelectedCountryListener {
+
+    override fun showErrorMessage(error: Throwable) {
+        //not implemented
+    }
+
     private val TAG = "CountrySelectDialog"
 
     @Inject

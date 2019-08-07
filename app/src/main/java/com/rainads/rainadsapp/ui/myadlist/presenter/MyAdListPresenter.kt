@@ -45,12 +45,16 @@ class MyAdListPresenter<V : MyAdListView, I : IMyAdListInteractor>
         interactor?.let {
             compositeDisposable.add(it.getUser()
                     .compose(schedulerProvider.ioToMainObservableScheduler())
-                    .subscribe { user ->
+                    .subscribe({ user ->
                         getView()?.let { it ->
                             it.hideProgress()
                             it.userDownloaded(user)
                         }
-                    })
+                    }, { err ->
+                        println(err)
+                        getView()?.hideProgress()
+                        getView()?.showErrorMessage(err)
+                    }))
         }
 
     }

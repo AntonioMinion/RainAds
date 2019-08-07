@@ -13,6 +13,7 @@ object Handler {
             MyConstants.CONFIRM_PASSWORD_ERROR -> "Confirm password does not match"
             MyConstants.NETWORK_FAILURE -> "Check internet connection"
             MyConstants.ERROR_CHANGE_AD_STATUS -> "Error while changing ad status"
+            MyConstants.ERROR_ACCEPT_TERMS_AND_PRIVACY -> "Please make sure to read and accept the Terms of Use and the Privacy Policy"
             else -> "Unknown Error $errorCode"
         }
     }

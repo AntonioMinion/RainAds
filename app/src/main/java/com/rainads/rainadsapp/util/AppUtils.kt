@@ -128,6 +128,7 @@ object AppUtils {
 
         img?.setBounds(0, 0, 60, 60)
         textView.setCompoundDrawables(img, null, null, null)
+        textView.maxLines = 3
         textView.compoundDrawablePadding = 26
 
         textView.setTextColor(textColor)

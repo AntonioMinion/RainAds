@@ -2,6 +2,7 @@ package com.rainads.rainadsapp.ui.initial.view
 
 import android.Manifest
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.Window
 import android.widget.ArrayAdapter
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.rainads.rainadsapp.R
 import com.rainads.rainadsapp.data.network.models.Country
@@ -27,7 +29,8 @@ import kotlinx.android.synthetic.main.dialog_resend_email.*
 import javax.inject.Inject
 
 
-class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinishedListener, BaseActivity.PermissionRequestListener {
+class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinishedListener,
+    BaseActivity.PermissionRequestListener {
 
     @Inject
     internal lateinit var presenter: InitialMVPPresenter<InitialMVPView, InitialMVPInteractor>
@@ -47,8 +50,8 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
         presenter.onAttach(this)
 
         spinner_countries.background.setColorFilter(
-                ContextCompat.getColor(this, R.color.white),
-                PorterDuff.Mode.SRC_ATOP
+            ContextCompat.getColor(this, R.color.white),
+            PorterDuff.Mode.SRC_ATOP
         )
 
         setOnClickListeners()
@@ -64,7 +67,7 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
 
     override fun loadCountries(countries: List<Country>) {
         val countryNames: List<String> = countries.map { it.name }
-        val adapter = ArrayAdapter<String>(this, R.layout.item_display_spinner_light, countryNames)
+        val adapter = ArrayAdapter(this, R.layout.item_display_spinner_light, countryNames)
         adapter.setDropDownViewResource(R.layout.item_spinner_custom)
         spinner_countries?.adapter = adapter
     }
@@ -167,11 +170,11 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
 
     private fun registerUser(referral: String) {
         presenter.onRegisterClicked(
-                et_email.text.toString(),
-                et_password.text.toString(),
-                et_confirm_password.text.toString(),
-                spinner_countries.selectedItem.toString(),
-                referral
+            et_email.text.toString(),
+            et_password.text.toString(),
+            et_confirm_password.text.toString(),
+            spinner_countries.selectedItem.toString(),
+            referral
         )
     }
 
@@ -208,12 +211,19 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
             hideKeyboard()
 
             if (AppUtils.isConnected(this)) {
-                if (isSignUp)
-                    askForReferralCode()
-                else {
+                if (isSignUp) {
+                    if (cbTerms.isChecked && cbPrivacy.isChecked)
+                        askForReferralCode()
+                    else
+                        AppUtils.showMySnackBar(
+                            it,
+                            Handler.getErrorMessage(MyConstants.ERROR_ACCEPT_TERMS_AND_PRIVACY),
+                            SnackBarType.INFO
+                        )
+                } else {
                     presenter.onLoginClicked(
-                            et_email.text.toString(),
-                            et_password.text.toString()
+                        et_email.text.toString(),
+                        et_password.text.toString()
                     )
                 }
             } else {
@@ -221,6 +231,33 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
             }
         }
 
+        ivOpenPrivacy.setOnClickListener {
+            openTextDialog(false)
+        }
+
+        ivOpenTerms.setOnClickListener {
+            openTextDialog(true)
+        }
+    }
+
+    private fun openTextDialog(isTerms: Boolean) {
+
+        val builder = AlertDialog.Builder(this)
+
+        with(builder)
+        {
+            setTitle(if(isTerms) getString(R.string.terms_of_use) else getString(R.string.privacy_policy))
+            setMessage(if(isTerms) getText(R.string.terms_of_use_text) else getText(R.string.privacy_policy_text))
+            setPositiveButton(
+                getString(R.string.close),
+                DialogInterface.OnClickListener(function = positiveButtonClick)
+            )
+            show()
+        }
+    }
+
+    private val positiveButtonClick = { dialog: DialogInterface, _: Int ->
+        dialog.dismiss()
     }
 
     private fun menuClicked(selectedView: Button, deselectedView: Button) {

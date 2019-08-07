@@ -19,6 +19,10 @@ import javax.inject.Inject
 
 class ScannerDialog : BaseDialogView(), IScannerView {
 
+    override fun showErrorMessage(error: Throwable) {
+        //not implemented
+    }
+
     private val TAG = "ScannerDialog"
 
     private var mDisposable: Disposable? = null

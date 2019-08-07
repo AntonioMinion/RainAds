@@ -13,13 +13,13 @@ import javax.inject.Inject
 
 class AddAdPresenter<V : AddAdView, I : IAddAdInteractor>
 @Inject internal constructor(
-    interactor: I,
-    schedulerProvider: SchedulerProvider,
-    disposable: CompositeDisposable
+        interactor: I,
+        schedulerProvider: SchedulerProvider,
+        disposable: CompositeDisposable
 ) : BasePresenter<V, I>(
-    interactor = interactor,
-    schedulerProvider = schedulerProvider,
-    compositeDisposable = disposable
+        interactor = interactor,
+        schedulerProvider = schedulerProvider,
+        compositeDisposable = disposable
 ), IAddAdPresenter<V, I> {
 
     override fun onAttach(view: V?) {
@@ -27,53 +27,57 @@ class AddAdPresenter<V : AddAdView, I : IAddAdInteractor>
         getOptionsList()
     }
 
-    private fun getOptionsList(){
+    private fun getOptionsList() {
         interactor?.let {
             it.getOptionsList()
                     .compose(schedulerProvider.ioToMainObservableScheduler())
-                    .subscribe { list ->
+                    .subscribe({ list ->
                         getView()?.let { it ->
                             it.hideProgress()
                             it.loadOptions(list)
                         }
-                    }
+                    }, { err ->
+                        println(err)
+                        getView()?.hideProgress()
+                        getView()?.showErrorMessage(err)
+                    })
         }
     }
 
     override fun saveAd(
-        adUrl: String,
-        adPrice: String,
-        adDuration: String,
-        adDescription: String,
-        adCountries: List<String>
+            adUrl: String,
+            adPrice: String,
+            adDuration: String,
+            adDescription: String,
+            adCountries: List<String>
     ) {
         when {
             adUrl.isEmpty() -> getView()?.showMessage(
-                ToastType.ERROR,
-                Handler.getErrorMessage(MyConstants.EMPTY_AD_URL)
+                    ToastType.ERROR,
+                    Handler.getErrorMessage(MyConstants.EMPTY_AD_URL)
             )
             adPrice.isEmpty() -> getView()?.showMessage(
-                ToastType.ERROR,
-                Handler.getErrorMessage(MyConstants.EMPTY_AD_PRICE)
+                    ToastType.ERROR,
+                    Handler.getErrorMessage(MyConstants.EMPTY_AD_PRICE)
             )
             adDescription.isEmpty() -> getView()?.showMessage(
-                ToastType.ERROR,
-                Handler.getErrorMessage(MyConstants.EMPTY_AD_DESCRIPTION)
+                    ToastType.ERROR,
+                    Handler.getErrorMessage(MyConstants.EMPTY_AD_DESCRIPTION)
             )
             else -> {
                 getView()?.showProgress()
                 interactor?.let {
                     compositeDisposable.add(
-                        it.createAdCall(adUrl, adPrice, adDuration, adDescription, adCountries)
-                            .compose(schedulerProvider.ioToMainObservableScheduler())
-                            .subscribe({ saveAdResponse ->
-                                getView()?.hideProgress()
-                                getView()?.showMessage(ToastType.SUCCESS, saveAdResponse)
-                            }, { err ->
-                                println(err)
-                                getView()?.hideProgress()
-                                getView()?.showMessage(ToastType.ERROR, Handler.getErrorMessage(0))
-                            })
+                            it.createAdCall(adUrl, adPrice, adDuration, adDescription, adCountries)
+                                    .compose(schedulerProvider.ioToMainObservableScheduler())
+                                    .subscribe({ saveAdResponse ->
+                                        getView()?.hideProgress()
+                                        getView()?.showMessage(ToastType.SUCCESS, saveAdResponse)
+                                    }, { err ->
+                                        println(err)
+                                        getView()?.hideProgress()
+                                        getView()?.showMessage(ToastType.ERROR, Handler.getErrorMessage(0))
+                                    })
                     )
                 }
 

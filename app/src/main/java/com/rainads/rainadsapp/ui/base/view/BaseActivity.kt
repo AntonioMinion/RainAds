@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.rainads.rainadsapp.ui.scanner.view.ScannerDialog
+import com.androidnetworking.error.ANError
+import com.rainads.rainadsapp.R
 import com.rainads.rainadsapp.util.AppUtils
 import com.rainads.rainadsapp.util.MyConstants
+import com.rainads.rainadsapp.util.ToastType
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
 
@@ -26,10 +28,20 @@ abstract class BaseActivity : DaggerAppCompatActivity(), MVPView, BaseFragment.C
     internal fun setPermissionRequestListener(listener: PermissionRequestListener) {
         this.permissionRequestListener = listener
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         performDI()
         super.onCreate(savedInstanceState)
+    }
+
+    override fun showErrorMessage(error: Throwable) {
+        var message = "Unknown Error"
+        if (error is ANError)
+            if (error.errorDetail.equals("connectionError", ignoreCase = true)) {
+                message = getString(R.string.check_internet_connection)
+            } else if (!error.message.isNullOrEmpty())
+                message = error.message!!
+        AppUtils.showMyToast(layoutInflater, this, message, ToastType.ERROR)
     }
 
     override fun hideProgress() {

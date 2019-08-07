@@ -21,6 +21,8 @@ object MyConstants {
 
     internal const val ERROR_CHANGE_AD_STATUS = 2005
 
+    internal const val ERROR_ACCEPT_TERMS_AND_PRIVACY = 9005
+
     //extras
     internal const val EXTRA_AD_URL = "EXTRA_AD_URL"
     internal const val EXTRA_AD_ID = "EXTRA_AD_ID"

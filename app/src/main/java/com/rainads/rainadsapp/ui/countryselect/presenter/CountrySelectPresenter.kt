@@ -34,12 +34,16 @@ class CountrySelectPresenter<V : CountrySelectDialogMVPView, I : CountrySelectMV
         interactor?.let {
             it.getCountries()
                 .compose(schedulerProvider.ioToMainObservableScheduler())
-                .subscribe { countries ->
+                .subscribe ({ countries ->
                     getView()?.let { it ->
                         it.hideProgress()
                         it.loadCountries(countries)
                     }
-                }
+                }, { err ->
+                    println(err)
+                    getView()?.hideProgress()
+                    getView()?.showErrorMessage(err)
+                } )
         }
     }
 }

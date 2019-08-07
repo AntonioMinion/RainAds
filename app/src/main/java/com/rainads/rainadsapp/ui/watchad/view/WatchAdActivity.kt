@@ -42,6 +42,8 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
 
     private lateinit var mRewardedVideoAd: RewardedVideoAd
 
+    private var pageLoaded = false
+
     override fun onFragmentAttached() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -225,6 +227,9 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
                 // Enable disable back forward button
                 iv_web_back.isEnabled = webView.canGoBack()
                 iv_web_forward.isEnabled = webView.canGoForward()
+
+                pageLoaded = true
+                presenter.startTimer(adId, adDuration)
             }
         }
 
@@ -244,14 +249,14 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
 
     override fun onPause() {
         super.onPause()
-        if (!adWatched)
+        if (!adWatched && pageLoaded)
             presenter.pauseTimer()
         mRewardedVideoAd.pause(this)
     }
 
     override fun onResume() {
         super.onResume()
-        if (!adWatched)
+        if (!adWatched && pageLoaded)
             presenter.startTimer(adId, adDuration)
         mRewardedVideoAd.resume(this)
     }
@@ -266,7 +271,7 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
     }
 
     override fun onRewardedVideoAdClosed() {
-        presenter.watchAdExtra(adId)
+        //non implemented
     }
 
     override fun onRewardedVideoAdLeftApplication() {
@@ -282,7 +287,7 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
     }
 
     override fun onRewarded(p0: RewardItem?) {
-        //non implemented
+        presenter.watchAdExtra(adId)
     }
 
     override fun onRewardedVideoStarted() {
