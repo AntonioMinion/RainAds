@@ -8,6 +8,12 @@
     android:orientation="vertical"
     tools:context=".ui.splash.view.SplashActivity">
 
+
+    <View
+        android:layout_width="10dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="200dp"
@@ -24,4 +30,15 @@
         android:textColor="@color/white"
         android:textSize="46sp" />
 
+    <View
+        android:layout_width="10dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/tvVersionCode"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content" />
 </LinearLayout>

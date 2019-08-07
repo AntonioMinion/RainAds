@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
@@ -28,7 +29,7 @@ import java.nio.charset.Charset
 object AppUtils {
     fun getScreenWidth(context: Context): Int {
         val windowManager = context
-                .getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            .getSystemService(Context.WINDOW_SERVICE) as WindowManager
         windowManager.let {
             val dm = DisplayMetrics()
             it.defaultDisplay.getMetrics(dm)
@@ -38,7 +39,7 @@ object AppUtils {
 
     fun getScreenHeight(context: Context): Int {
         val windowManager = context
-                .getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            .getSystemService(Context.WINDOW_SERVICE) as WindowManager
         windowManager.let {
             val dm = DisplayMetrics()
             it.defaultDisplay.getMetrics(dm)
@@ -112,9 +113,9 @@ object AppUtils {
         }
 
         val snackBar = Snackbar.make(
-                view, // Parent view
-                text, // Message to show
-                Snackbar.LENGTH_SHORT // How long to display the message.
+            view, // Parent view
+            text, // Message to show
+            Snackbar.LENGTH_SHORT // How long to display the message.
         )
 
         val sbView = snackBar.view
@@ -168,4 +169,9 @@ object AppUtils {
         return text
     }
 
+    fun getVersionName(context: Context): String {
+        val manager = context.packageManager
+        val info = manager.getPackageInfo(context.packageName, PackageManager.GET_ACTIVITIES)
+        return info.versionName
+    }
 }
