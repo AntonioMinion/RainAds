@@ -62,7 +62,7 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
         tv_ad_timer.text = adDuration.toString()
         progressBarTimer.max = (adDuration * 1000).toInt()
 
-        if (!adUrl.startsWith("http://", ignoreCase = true) || !adUrl.startsWith("https://", ignoreCase = true)) {
+        if (!adUrl.startsWith("http://", ignoreCase = true) && !adUrl.startsWith("https://", ignoreCase = true)) {
             adUrl = "https://".plus(adUrl)
         }
 
@@ -132,7 +132,6 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
 
     override fun onAdWatchedExtra(type: ToastType, message: String) {
         AppUtils.showMyToast(layoutInflater, this, message, type)
-        finish()
     }
 
     private fun askForExtraAd() {
@@ -158,7 +157,6 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
 
         dialog.btnNo.setOnClickListener {
             dialog.dismiss()
-            finish()
         }
 
         dialog.show()
