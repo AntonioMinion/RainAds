@@ -86,6 +86,7 @@
     <string name="havent_received_email">If you haven\'t received an email yet, you can try resending it.</string>
     <string name="please_confirm_your_email">Please confirm your email</string>
     <string name="withdraw_limit_info">Minimum withdraw limit is 10,000 Satoshi!</string>
+    <string name="ad_error">No more ads were found</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="privacy_policy">Privacy Policy</string>
 

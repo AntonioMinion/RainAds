@@ -62,10 +62,6 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
         tv_ad_timer.text = adDuration.toString()
         progressBarTimer.max = (adDuration * 1000).toInt()
 
-        if (!adUrl.startsWith("http://", ignoreCase = true) && !adUrl.startsWith("https://", ignoreCase = true)) {
-            adUrl = "https://".plus(adUrl)
-        }
-
         initWebView()
         setOnClickListeners()
 

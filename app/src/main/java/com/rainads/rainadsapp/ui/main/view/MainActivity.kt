@@ -176,6 +176,8 @@ class MainActivity : BaseActivity(), MainMVPView {
         lastOpenedAd = theAd
         if (!theAd.message.isNullOrEmpty()) {
             AppUtils.showMyToast(layoutInflater, this, theAd.message, ToastType.INFO)
+        } else if(theAd.duration.isNullOrEmpty() || theAd.price.isNullOrEmpty() || theAd.url.isNullOrEmpty()) {
+            AppUtils.showMyToast(layoutInflater, this, getString(R.string.ad_error), ToastType.ERROR)
         } else {
             showAdBottomSheet(theAd)
         }
@@ -198,6 +200,9 @@ class MainActivity : BaseActivity(), MainMVPView {
 
     @SuppressLint("InflateParams")
     private fun showAdBottomSheet(theAd: AdModel) {
+        if(theAd.duration.isNullOrEmpty() || theAd.price.isNullOrEmpty())
+            return;
+
         val dialogView = layoutInflater.inflate(R.layout.bottom_sheet_ad, null)
         val dialog = BottomSheetDialog(this, R.style.SheetDialog)
 
@@ -216,8 +221,8 @@ class MainActivity : BaseActivity(), MainMVPView {
             val i = Intent(this, WatchAdActivity::class.java)
             i.putExtra(MyConstants.EXTRA_AD_URL, theAd.url)
             i.putExtra(MyConstants.EXTRA_AD_ID, theAd.id)
-            i.putExtra(MyConstants.EXTRA_AD_DURATION, theAd.duration?.toLong())
-            i.putExtra(MyConstants.EXTRA_AD_PRICE, theAd.price.toInt() / 2)
+            i.putExtra(MyConstants.EXTRA_AD_DURATION, if(theAd.duration != null) theAd.duration.toLong() else 0)
+            i.putExtra(MyConstants.EXTRA_AD_PRICE, if(theAd.price != null) theAd.price.toInt() / 2 else 0)
             startActivityForResult(i, MyConstants.REQUEST_RESULT_WATCH_AD)
         }
 

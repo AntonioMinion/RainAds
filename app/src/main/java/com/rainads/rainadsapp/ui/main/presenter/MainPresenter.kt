@@ -1,5 +1,6 @@
 package com.rainads.rainadsapp.ui.main.presenter
 
+import com.rainads.rainadsapp.data.network.models.AdModel
 import com.rainads.rainadsapp.ui.base.presenter.BasePresenter
 import com.rainads.rainadsapp.ui.main.interactor.MainMVPInteractor
 import com.rainads.rainadsapp.ui.main.view.MainMVPView
@@ -48,6 +49,7 @@ class MainPresenter<V : MainMVPView, I : MainMVPInteractor> @Inject internal con
                             }, { err ->
                                 println(err)
                                 getView()?.hideProgress()
+                                getView()?.adFound(AdModel("", "", "", "", "", "", "", emptyList(), err.message!!))
                             })
             )
         }

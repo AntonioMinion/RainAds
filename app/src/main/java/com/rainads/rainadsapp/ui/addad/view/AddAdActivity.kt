@@ -79,7 +79,12 @@ class AddAdActivity : BaseActivity(), AddAdView, CountrySelectDialog.CountriesSa
     }
 
     private fun saveAd() {
-        val adUrl = et_ad_url.text.toString()
+        var adUrl = et_ad_url.text.toString()
+
+        if (!adUrl.startsWith("http://", ignoreCase = true) && !adUrl.startsWith("https://", ignoreCase = true)) {
+            adUrl = "https://".plus(adUrl)
+        }
+
         val adDuration = (spinner_ad_price_duration.selectedItem as SatoshiResponse).duration.toString()
         val adPrice = (spinner_ad_price_duration.selectedItem as SatoshiResponse).satoshi.toString()
         val adDescription = et_ad_description.text.toString()
