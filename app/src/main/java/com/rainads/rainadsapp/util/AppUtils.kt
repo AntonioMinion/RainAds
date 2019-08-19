@@ -57,12 +57,13 @@ object AppUtils {
         }
     }
 
-    fun showLoadingDialog(context: Context): Dialog {
+    fun buildLoadingDialog(context: Context): Dialog {
         val progressDialog = Dialog(context)
         progressDialog.let {
-            it.show()
-            it.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
-            it.window?.requestFeature(Window.FEATURE_NO_TITLE)
+            if(it.window != null) {
+                it.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+                it.window?.requestFeature(Window.FEATURE_NO_TITLE)
+            }
             it.setContentView(R.layout.dialog_custom_loading)
             it.setCancelable(false)
             it.setCanceledOnTouchOutside(false)

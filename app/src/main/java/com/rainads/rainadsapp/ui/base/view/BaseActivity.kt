@@ -50,7 +50,8 @@ abstract class BaseActivity : DaggerAppCompatActivity(), MVPView, BaseFragment.C
 
     override fun showProgress() {
         hideProgress()
-        progressDialog = AppUtils.showLoadingDialog(this)
+        progressDialog = AppUtils.buildLoadingDialog(this)
+        progressDialog!!.show()
     }
 
     private fun performDI() = AndroidInjection.inject(this)
