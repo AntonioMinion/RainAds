@@ -31,6 +31,7 @@
     <string name="btc_copied">BTC Address Copied</string>
     <string name="ad_website_url">Ad Website Url</string>
     <string name="ad_duration">Ad Duration</string>
+    <string name="cancel_ad">Are you sure you want to exit this ad?</string>
     <string name="title">Title</string>
     <string name="ask_for_referral">If someone recommended you, please consider adding their Referral Code in the field below.</string>
     <string name="before_proceeding">Before proceeding…</string>
@@ -61,6 +62,7 @@
     <string name="important">Important!</string>
     <string name="no">No</string>
     <string name="yes_i_want_50_more">YES, I WANT 50% MORE</string>
+    <string name="yes">YES</string>
     <string name="extra_ad_description">You have just earned %1$d satoshi!\nDo you want to earn additional <b>50%%</b>?</string>
     <string name="seconds">seconds</string>
     <string name="deposit">Deposit</string>
@@ -87,6 +89,7 @@
     <string name="please_confirm_your_email">Please confirm your email</string>
     <string name="withdraw_limit_info">Minimum withdraw limit is 10,000 Satoshi!</string>
     <string name="ad_error">No more ads were found</string>
+    <string name="ad_isnt_loaded">No extra ad found.</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="privacy_policy">Privacy Policy</string>
 
@@ -154,5 +157,6 @@
         \n\n<b>Contact me</b>
         \n\nIf you have any questions or suggestions about my Privacy Policy, do not hesitate to contact me at rainadsnetwork@gmail.com.
     </string>
+    <string name="startapp_consent_gdpr">StartApp Consent (GDPR)</string>
 
 </resources>

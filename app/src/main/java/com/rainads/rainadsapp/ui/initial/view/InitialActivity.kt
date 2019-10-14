@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import com.google.android.gms.ads.MobileAds
 import com.rainads.rainadsapp.R
 import com.rainads.rainadsapp.data.network.models.Country
 import com.rainads.rainadsapp.data.network.models.ResendEmailRequest
@@ -23,6 +24,7 @@ import com.rainads.rainadsapp.ui.main.view.MainActivity
 import com.rainads.rainadsapp.ui.scanner.view.ScannerDialog
 import com.rainads.rainadsapp.util.*
 import com.rainads.rainadsapp.util.AppUtils.hideKeyboard
+import com.startapp.android.publish.adsCommon.StartAppSDK
 import kotlinx.android.synthetic.main.activity_initial.*
 import kotlinx.android.synthetic.main.dialog_custom_referral_code.*
 import kotlinx.android.synthetic.main.dialog_resend_email.*
@@ -39,9 +41,25 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
 
     private lateinit var dialog: Dialog
 
+    private fun initAdProviders(){
+        MobileAds.initialize(
+                this,
+                "ca-app-pub-6953773192251170~7601411476"
+        )
+
+        StartAppSDK.init(this, "207141024", true)
+        StartAppSDK.setUserConsent (this,
+                "pas",
+                System.currentTimeMillis(),
+                false)
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial)
+
+        initAdProviders()
 
         setPermissionRequestListener(this)
 

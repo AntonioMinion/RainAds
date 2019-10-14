@@ -284,7 +284,8 @@ class MainActivity : BaseActivity(), MainMVPView {
 
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        if(dialog.window != null)
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.setContentView(R.layout.dialog_logout)
 
         dialog.btnLogOut.setOnClickListener {

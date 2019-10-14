@@ -23,9 +23,14 @@ import com.rainads.rainadsapp.ui.watchad.presenter.IWatchAdPresenter
 import com.rainads.rainadsapp.util.AppUtils
 import com.rainads.rainadsapp.util.MyConstants
 import com.rainads.rainadsapp.util.ToastType
+import com.startapp.android.publish.adsCommon.Ad
+import com.startapp.android.publish.adsCommon.StartAppAd
+import com.startapp.android.publish.adsCommon.adListeners.AdEventListener
 import kotlinx.android.synthetic.main.activity_watch_ad.*
 import kotlinx.android.synthetic.main.dialog_extra_ad.*
+import kotlinx.android.synthetic.main.dialog_logout.*
 import javax.inject.Inject
+
 
 class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
 
@@ -37,6 +42,8 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
     private lateinit var adUrl: String
     private var adDuration = 0L
     private var adPrice = 30
+
+    private val startAppAd = StartAppAd(this)
 
     private var adWatched = false
 
@@ -62,12 +69,16 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
         tv_ad_timer.text = adDuration.toString()
         progressBarTimer.max = (adDuration * 1000).toInt()
 
+        if (!adUrl.startsWith("http://", ignoreCase = true) && !adUrl.startsWith(
+                        "https://",
+                        ignoreCase = true
+                )
+        ) {
+            adUrl = "https://".plus(adUrl)
+        }
+
         initWebView()
         setOnClickListeners()
-
-
-        MobileAds.initialize(this,
-                "ca-app-pub-6953773192251170~7601411476")
 
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this)
         mRewardedVideoAd.rewardedVideoAdListener = this
@@ -76,10 +87,11 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
     }
 
     private fun loadRewardedVideoAd() {
-        mRewardedVideoAd.loadAd("ca-app-pub-6953773192251170/1327524421",
-                AdRequest.Builder().build())
+        mRewardedVideoAd.loadAd(
+                "ca-app-pub-6953773192251170/1327524421",
+                AdRequest.Builder().build()
+        )
     }
-
 
     private fun getExtras() {
         val bundle = intent.extras
@@ -145,8 +157,27 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
 
             if (mRewardedVideoAd.isLoaded) {
                 mRewardedVideoAd.show()
+                dialog.dismiss()
             } else {
-                AppUtils.showMyToast(layoutInflater, this, "Ad isn't loaded yet.", ToastType.INFO)
+                //AdMob not found, try to load StartApp ad
+                startAppAd.setVideoListener {
+                    presenter.watchAdExtra(adId)
+                }
+
+                startAppAd.loadAd(StartAppAd.AdMode.REWARDED_VIDEO, object : AdEventListener {
+
+                    override fun onReceiveAd(ad: Ad) {
+                        startAppAd.showAd()
+                    }
+
+                    override fun onFailedToReceiveAd(ad: Ad) {
+                        AppUtils.showMyToast(layoutInflater, this@WatchAdActivity, getString(R.string.ad_isnt_loaded), ToastType.INFO)
+                    }
+
+
+                })
+
+                startAppAd.showAd()
             }
 
         }
