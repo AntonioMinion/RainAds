@@ -20,6 +20,20 @@ class MainPresenter<V : MainMVPView, I : MainMVPInteractor> @Inject internal con
 ), MainMVPPresenter<V, I> {
 
 
+    override fun checkTimeForAd() {
+        interactor?.let {
+            compositeDisposable.add(
+                it.checkTimeForAd()
+                    .compose(schedulerProvider.ioToMainObservableScheduler())
+                    .subscribe({ canWatch ->
+                        getView()?.canWatchAd(canWatch)
+                    }, { err ->
+                        println(err)
+                    })
+            )
+        }
+    }
+
     override fun getUser() {
         getView()?.showProgress()
         interactor?.let {

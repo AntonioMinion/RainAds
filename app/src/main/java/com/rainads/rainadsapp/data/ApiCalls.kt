@@ -14,6 +14,6 @@ interface ApiCalls {
     fun sendWithdrawRequest(request: WithdrawRequest): Observable<String>
     fun watchAd(request: WatchAdRequest): Observable<String>
     fun changeAdStatus(request: PlayAdRequest): Observable<JSONObject>
-    fun getSatoshiList(): Observable<List<SatoshiResponse>>
+    fun getPointsList(): Observable<List<PointsResponse>>
     fun resendConfirmEmail(request: ResendEmailRequest): Observable<String>
 }

@@ -8,4 +8,6 @@ import io.reactivex.Observable
 interface MainMVPInteractor : MVPInteractor {
     fun downloadAd(): Observable<AdModel>
     fun downloadUser(): Observable<User>
+    fun checkTimeForAd(): Observable<Boolean>
+
 }

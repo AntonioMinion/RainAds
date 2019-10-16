@@ -4,10 +4,10 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.rainads.rainadsapp.util.CustomModelDisplayName
 
-data class SatoshiResponse(
+data class PointsResponse(
         @Expose
         @SerializedName("satoshi")
-        var satoshi: Int,
+        var points: Int,
 
         @Expose
         @SerializedName("seconds")
@@ -15,6 +15,6 @@ data class SatoshiResponse(
 
 ) : CustomModelDisplayName {
     override val displayName: String
-        get() = duration.toString().plus(" seconds/").plus(satoshi.toString()).plus(" satoshi")
+        get() = duration.toString().plus(" seconds/").plus(points.toString()).plus(" points")
 
 }

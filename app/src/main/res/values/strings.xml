@@ -16,7 +16,7 @@
     <string name="market">Market</string>
     <string name="network">Network</string>
     <string name="withdraw">Withdraw</string>
-    <string name="satoshi">satoshi</string>
+    <string name="points">Rain Points</string>
     <string name="balance">Balance</string>
     <string name="advertise">Advertise</string>
     <string name="check_internet_connection">"Check internet connection"</string>
@@ -63,7 +63,7 @@
     <string name="no">No</string>
     <string name="yes_i_want_50_more">YES, I WANT 50% MORE</string>
     <string name="yes">YES</string>
-    <string name="extra_ad_description">You have just earned %1$d satoshi!\nDo you want to earn additional <b>50%%</b>?</string>
+    <string name="extra_ad_description">You have just earned %1$d points!\nDo you want to earn additional <b>50%%</b>?</string>
     <string name="seconds">seconds</string>
     <string name="deposit">Deposit</string>
     <string name="refresh">Refresh</string>
@@ -73,13 +73,13 @@
     <string name="send_withdraw_request">SEND WITHDRAW REQUEST</string>
     <string name="you_have_pending_deposit_request">YOU HAVE PENDING DEPOSIT REQUEST!</string>
     <string name="transfer_fee">Transfer Fee</string>
-    <string name="amount_to_deposit_to_rainads_balance">Amount in satoshi</string>
+    <string name="amount_to_deposit_to_rainads_balance">Amount in points</string>
     <string name="balance_on_btc_address">Balance on BTC Address</string>
     <string name="btnContinue">Continue</string>
     <string name="scan_referral_code">Scan Referral Code</string>
     <string name="scanning">Scanning…</string>
-    <string name="balance_on_btc_address_satoshi">Balance on BTC Address (Satoshi)</string>
-    <string name="raindads_balance_satoshi">RaindAds Balance (Satoshi)</string>
+    <string name="balance_on_btc_address_points">Balance on BTC Address (Points)</string>
+    <string name="rainads_balance_points">RainAds Balance (Points)</string>
     <string name="ok">OK</string>
     <string name="close">Close</string>
     <string name="success">Success</string>
@@ -87,8 +87,9 @@
     <string name="receiving_btc_address">Receiving BTC Address</string>
     <string name="havent_received_email">If you haven\'t received an email yet, you can try resending it.</string>
     <string name="please_confirm_your_email">Please confirm your email</string>
-    <string name="withdraw_limit_info">Minimum withdraw limit is 10,000 Satoshi!</string>
+    <string name="withdraw_limit_info">Minimum withdraw limit is 10,000 Points!</string>
     <string name="ad_error">No more ads were found</string>
+    <string name="ad_time_error">You need to wait %1$s seconds before watching another ad</string>
     <string name="ad_isnt_loaded">No extra ad found.</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="privacy_policy">Privacy Policy</string>
@@ -147,13 +148,13 @@
         \n\nYou are responsible for all of your activity in connection with the RainAds Services. Any fraudulent, abusive, or otherwise illegal activity may be grounds for termination of your right to access or use the RainAds Services. You may not post or transmit, or cause to be posted or transmitted, any communication or solicitation designed or intended to obtain password, account, or private information from any other user of the RainAds Service. Use of the Services to violate the security of any computer network, crack passwords or security encryption codes, transfer or store illegal material (including material that may be considered threatening or obscene), or engage in any kind of illegal activity is expressly prohibited. You will be responsible for withholding, filing, and reporting all taxes, duties and other governmental assessments associated with your activity in connection with the RainAds Services.
         \n\n<b>Rights</b>
         \n\nYou have the right to earn from our referral marketing system up to 10 levels which are declared in our Network option on our dashboard, which are declared as 10% on 1st level, 5% on 2nd level, 3% on 3rd level and from 4th to 10th level is 1% commission earned from the points of your network.
-        \n\nThere is no investment from the user’s side, there is only an option for an advertiser to deposit satoshi (bitcoin) In order to get traffic (views) to their weblink which the users can go there for free and earn satoshi points as an reward and when they reach 10000 satoshi points they can withdraw their reward on a given user personal satosi wallet.
+        \n\nThere is no investment from the user’s side, there is only an option for an advertiser to deposit points (bitcoin) In order to get traffic (views) to their weblink which the users can go there for free and earn points points as an reward and when they reach 10000 points points they can withdraw their reward on a given user personal satosi wallet.
         \n\n<b>Children’s Privacy</b>
         \n\nThese Services do not address anyone under the age of 13. I do not knowingly collect personally identifiable information from children under 13. In the case I discover that a child under 13 has provided me with personal information, I immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact me so that I will be able to do necessary actions.
         \n\n<b>Changes to This Privacy Policy</b>
         \n\nI may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately after they are posted on this page.
         \n\n<b>Terms of Payment.</b>
-        \n\nI shall pay User within every 7 days. In case of any issue with, my service we may take more than a month to pay your earning. If the payout is less than 10000 satoshi it will be held until amounts due equal or exceed 10000 satoshi. If User disputes any payment, it must notify me in writing within sixty (60) days of the date of payment or forever waive User\'s rights to raise the dispute.
+        \n\nI shall pay User within every 7 days. In case of any issue with, my service we may take more than a month to pay your earning. If the payout is less than 10000 points it will be held until amounts due equal or exceed 10000 points. If User disputes any payment, it must notify me in writing within sixty (60) days of the date of payment or forever waive User\'s rights to raise the dispute.
         \n\n<b>Contact me</b>
         \n\nIf you have any questions or suggestions about my Privacy Policy, do not hesitate to contact me at rainadsnetwork@gmail.com.
     </string>

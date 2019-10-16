@@ -11,7 +11,7 @@ object ApiEndPoint {
     const val ENDPOINT_WATCH_AD = BuildConfig.BASE_URL + "/watchAd"
     const val ENDPOINT_CREATE_AD = BuildConfig.BASE_URL + "/createAd"
     const val ENDPOINT_PLAY_AD = BuildConfig.BASE_URL + "/playAd"
-    const val ENDPOINT_SATOSHI_LIST = BuildConfig.BASE_URL + "/satoshiList"
+    const val ENDPOINT_POINTS_LIST = BuildConfig.BASE_URL + "/satoshiList"
     const val ENDPOINT_DEPOSIT = BuildConfig.BASE_URL + "/transferToRainAds"
     const val ENDPOINT_WITHDRAW = BuildConfig.BASE_URL + "/withdrawl"
     const val ENDPOINT_RESEND_CONFIRM_EMAIL = BuildConfig.BASE_URL + "/resendEmailVerification"

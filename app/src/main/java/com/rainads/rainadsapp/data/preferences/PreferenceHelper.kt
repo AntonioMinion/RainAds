@@ -22,4 +22,8 @@ interface PreferenceHelper {
 
     fun setBtcAddress(btcAddress: String?)
 
+    fun setLastWatchedAdTime(time: Long)
+
+    fun getLastWatchedAdTime() : Long
+
 }

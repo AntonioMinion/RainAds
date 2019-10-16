@@ -1,6 +1,7 @@
 package com.rainads.rainadsapp.ui.watchad.presenter
 
 import android.os.CountDownTimer
+import android.os.SystemClock
 import com.rainads.rainadsapp.ui.base.presenter.BasePresenter
 import com.rainads.rainadsapp.ui.watchad.interactor.IWatchAdInteractor
 import com.rainads.rainadsapp.ui.watchad.view.WatchAdView
@@ -9,7 +10,6 @@ import com.rainads.rainadsapp.util.SchedulerProvider
 import com.rainads.rainadsapp.util.ToastType
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
-
 
 class WatchAdPresenter<V : WatchAdView, I : IWatchAdInteractor>
 @Inject internal constructor(
@@ -27,6 +27,9 @@ class WatchAdPresenter<V : WatchAdView, I : IWatchAdInteractor>
 
     private lateinit var countDownTimer: CountDownTimer
 
+    //just safety net
+    private var alreadyDone: Boolean = false
+
     override fun startTimer(adId: String, adDuration: Long) {
         actualDuration = if (lastTick != 0L) lastTick else adDuration * 1000
 
@@ -35,10 +38,13 @@ class WatchAdPresenter<V : WatchAdView, I : IWatchAdInteractor>
                 getView()?.onTimerFinished()
                 interactor?.let {
                     compositeDisposable.add(
-                        it.watchAd(adId)
+                        it.watchAd(adId, SystemClock.elapsedRealtime())
                             .compose(schedulerProvider.ioToMainObservableScheduler())
                             .subscribe({ msg ->
-                                getView()?.onAdWatched(ToastType.SUCCESS, msg)
+                                if (!alreadyDone) {
+                                    alreadyDone = true
+                                    getView()?.onAdWatched(ToastType.SUCCESS, msg)
+                                }
                             }, { err ->
                                 println(err)
                                 getView()?.onAdWatched(
@@ -61,10 +67,10 @@ class WatchAdPresenter<V : WatchAdView, I : IWatchAdInteractor>
         countDownTimer.start()
     }
 
-    override fun watchAdExtra(adId: String){
+    override fun watchAdExtra(adId: String) {
         interactor?.let {
             compositeDisposable.add(
-                it.watchAd(adId)
+                it.watchAd(adId, SystemClock.elapsedRealtime())
                     .compose(schedulerProvider.ioToMainObservableScheduler())
                     .subscribe({ msg ->
                         getView()?.onAdWatchedExtra(ToastType.SUCCESS, msg)

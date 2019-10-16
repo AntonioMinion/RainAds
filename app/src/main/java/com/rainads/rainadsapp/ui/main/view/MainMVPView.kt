@@ -7,6 +7,7 @@ import com.rainads.rainadsapp.ui.base.view.MVPView
 interface MainMVPView : MVPView {
     fun referralCodeFound(code: String?)
     fun adFound(theAd: AdModel)
+    fun canWatchAd(watchable: Boolean)
     fun userDownloaded(user: User)
     fun btcAddressFound(btcAddress: String?)
 }

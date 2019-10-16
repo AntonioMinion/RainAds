@@ -75,9 +75,9 @@ class DepositActivity : BaseActivity(), DepositView {
 
         tvBalanceBtcAddress.text = if (user.btcAddress.isNullOrEmpty()) "/" else user.btcAddress
 
-        tvDepositRainAdsBalanceSatoshi.text = if (user.balance.isNullOrEmpty()) "0" else user.balance
+        tvDepositRainAdsBalancePoints.text = if (user.balance.isNullOrEmpty()) "0" else user.balance
 
-        tvDepositSatoshiBalance.text = "0"
+        tvDepositPointsBalance.text = "0"
 
         if (!user.btcBalance.isNullOrEmpty()) {
             actualBalance = user.btcBalance?.toFloat()?.times(100000000)!!
@@ -86,7 +86,7 @@ class DepositActivity : BaseActivity(), DepositView {
         if (user.btcBalance.isNullOrEmpty() || actualBalance == 0f) {
             disableDepositButton()
         } else {
-            tvDepositSatoshiBalance.text = actualBalance.toString()
+            tvDepositPointsBalance.text = actualBalance.toString()
         }
 
         /*

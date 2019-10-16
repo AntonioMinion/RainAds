@@ -28,7 +28,6 @@ import com.startapp.android.publish.adsCommon.StartAppAd
 import com.startapp.android.publish.adsCommon.adListeners.AdEventListener
 import kotlinx.android.synthetic.main.activity_watch_ad.*
 import kotlinx.android.synthetic.main.dialog_extra_ad.*
-import kotlinx.android.synthetic.main.dialog_logout.*
 import javax.inject.Inject
 
 
@@ -171,7 +170,12 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
                     }
 
                     override fun onFailedToReceiveAd(ad: Ad) {
-                        AppUtils.showMyToast(layoutInflater, this@WatchAdActivity, getString(R.string.ad_isnt_loaded), ToastType.INFO)
+                        AppUtils.showMyToast(
+                                layoutInflater,
+                                this@WatchAdActivity,
+                                getString(R.string.ad_isnt_loaded),
+                                ToastType.INFO
+                        )
                     }
 
 

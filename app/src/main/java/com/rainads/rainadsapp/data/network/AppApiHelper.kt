@@ -75,10 +75,10 @@ class AppApiHelper @Inject constructor(private val preferenceHelper: PreferenceH
                     .build()
                     .stringObservable
 
-    override fun getSatoshiList(): Observable<List<SatoshiResponse>> =
-            Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_SATOSHI_LIST)
+    override fun getPointsList(): Observable<List<PointsResponse>> =
+            Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_POINTS_LIST)
                     .build()
-                    .getObjectListObservable(SatoshiResponse::class.java)
+                    .getObjectListObservable(PointsResponse::class.java)
 
     override fun resendConfirmEmail(request: ResendEmailRequest): Observable<String> =
             Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_RESEND_CONFIRM_EMAIL)

@@ -102,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="6dp"
-                        android:text="@string/satoshi"
+                        android:text="@string/points"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
 

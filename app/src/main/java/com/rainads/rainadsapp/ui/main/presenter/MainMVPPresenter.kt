@@ -8,4 +8,5 @@ interface MainMVPPresenter<V : MainMVPView, I : MainMVPInteractor> : MVPPresente
     fun logoutUser()
     fun getUser()
     fun getAd()
+    fun checkTimeForAd()
 }

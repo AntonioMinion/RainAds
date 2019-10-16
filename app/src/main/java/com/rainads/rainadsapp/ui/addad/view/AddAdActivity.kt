@@ -3,7 +3,7 @@ package com.rainads.rainadsapp.ui.addad.view
 import android.os.Bundle
 import com.rainads.rainadsapp.R
 import com.rainads.rainadsapp.data.network.models.Country
-import com.rainads.rainadsapp.data.network.models.SatoshiResponse
+import com.rainads.rainadsapp.data.network.models.PointsResponse
 import com.rainads.rainadsapp.ui.addad.interactor.IAddAdInteractor
 import com.rainads.rainadsapp.ui.addad.presenter.AddAdPresenter
 import com.rainads.rainadsapp.ui.base.view.BaseActivity
@@ -46,7 +46,7 @@ class AddAdActivity : BaseActivity(), AddAdView, CountrySelectDialog.CountriesSa
         setOnClickListeners()
     }
 
-    override fun loadOptions(options: List<SatoshiResponse>) {
+    override fun loadOptions(options: List<PointsResponse>) {
         setupPriceDurationSpinner(options)
     }
 
@@ -85,14 +85,14 @@ class AddAdActivity : BaseActivity(), AddAdView, CountrySelectDialog.CountriesSa
             adUrl = "https://".plus(adUrl)
         }
 
-        val adDuration = (spinner_ad_price_duration.selectedItem as SatoshiResponse).duration.toString()
-        val adPrice = (spinner_ad_price_duration.selectedItem as SatoshiResponse).satoshi.toString()
+        val adDuration = (spinner_ad_price_duration.selectedItem as PointsResponse).duration.toString()
+        val adPrice = (spinner_ad_price_duration.selectedItem as PointsResponse).points.toString()
         val adDescription = et_ad_description.text.toString()
 
         presenter.saveAd(adUrl, adPrice, adDuration, adDescription, selectedCountries.map { it.name })
     }
 
-    private fun setupPriceDurationSpinner(options: List<SatoshiResponse>) {
+    private fun setupPriceDurationSpinner(options: List<PointsResponse>) {
         val priceDurationAdapter =
                 CustomArrayAdapter(this, R.layout.item_display_spinner_light, R.id.tv_spinner_text, options)
 

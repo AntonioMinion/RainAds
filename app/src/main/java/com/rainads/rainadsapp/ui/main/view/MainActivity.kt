@@ -183,6 +183,12 @@ class MainActivity : BaseActivity(), MainMVPView {
         }
     }
 
+    override fun canWatchAd(watchable: Boolean) {
+        //not implemented for now
+//        btn_watch_ad.isEnabled = watchable
+//        btn_watch_ad.alpha = if(watchable) 1f else 0.5f
+    }
+
     @SuppressLint("InflateParams")
     private fun showProfileBottomSheet() {
         val dialogView = layoutInflater.inflate(R.layout.bottom_sheet_profile, null)
