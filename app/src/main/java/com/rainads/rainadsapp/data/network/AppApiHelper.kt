@@ -85,4 +85,11 @@ class AppApiHelper @Inject constructor(private val preferenceHelper: PreferenceH
                     .addBodyParameter(request)
                     .build()
                     .stringObservable
+
+    override fun resetPassword(request: ResetPasswordRequest): Observable<String> =
+            Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_RESET_PASSWORD)
+                    .addBodyParameter(request)
+                    .build()
+                    .stringObservable
+
 }

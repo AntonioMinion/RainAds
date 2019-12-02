@@ -48,7 +48,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto_light"
                     android:gravity="center_vertical|end"
-                    android:text="Playing"
+                    android:text="@string/playing"
                     android:textColor="@color/colorPrimaryLight" />
 
                 <ImageView

@@ -64,6 +64,7 @@ class DepositActivity : BaseActivity(), DepositView {
                 tvBalanceBtcAddress.visibility = View.GONE
                 tilBtcAddress.visibility = View.VISIBLE
                 tvWithdrawMinimumAmount.visibility = View.VISIBLE
+                tvWithdrawNote.visibility = View.VISIBLE
 
                 btnSendDepositRequest.text = getString(R.string.send_withdraw_request)
             }

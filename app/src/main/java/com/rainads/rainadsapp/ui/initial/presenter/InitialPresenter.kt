@@ -2,6 +2,7 @@ package com.rainads.rainadsapp.ui.initial.presenter
 
 import com.androidnetworking.error.ANError
 import com.rainads.rainadsapp.data.network.models.ResendEmailRequest
+import com.rainads.rainadsapp.data.network.models.ResetPasswordRequest
 import com.rainads.rainadsapp.data.network.models.User
 import com.rainads.rainadsapp.ui.base.presenter.BasePresenter
 import com.rainads.rainadsapp.ui.initial.interactor.InitialMVPInteractor
@@ -46,6 +47,24 @@ class InitialPresenter<V : InitialMVPView, I : InitialMVPInteractor> @Inject int
                         getView()?.hideProgress()
                         getView()?.showErrorMessage(err)
                     })
+        }
+    }
+
+    override fun onResetPassword(request: ResetPasswordRequest) {
+        getView()?.showProgress()
+        interactor?.let {
+            compositeDisposable.add(
+                    it.resetPassword(request)
+                            .compose(schedulerProvider.ioToMainObservableScheduler())
+                            .subscribe({ response ->
+                                getView()?.hideProgress()
+                                getView()?.showMessage(ToastType.SUCCESS, response, "")
+                            }, { err ->
+                                println(err)
+                                getView()?.hideProgress()
+                                getView()?.showErrorMessage(0)
+                            })
+            )
         }
     }
 

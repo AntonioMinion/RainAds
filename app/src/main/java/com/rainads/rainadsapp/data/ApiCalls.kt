@@ -16,4 +16,5 @@ interface ApiCalls {
     fun changeAdStatus(request: PlayAdRequest): Observable<JSONObject>
     fun getPointsList(): Observable<List<PointsResponse>>
     fun resendConfirmEmail(request: ResendEmailRequest): Observable<String>
+    fun resetPassword(request: ResetPasswordRequest): Observable<String>
 }

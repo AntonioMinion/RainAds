@@ -159,5 +159,12 @@
         \n\nIf you have any questions or suggestions about my Privacy Policy, do not hesitate to contact me at rainadsnetwork@gmail.com.
     </string>
     <string name="startapp_consent_gdpr">StartApp Consent (GDPR)</string>
+    <string name="forgot_your_password">Forgot your password?</string>
+    <string name="please_enter_your_email_in_the_input_field_below">Please enter your email in the input field below.</string>
+    <string name="send">Send</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="withdraw_note">10,000 points are paid out as 1€</string>
+    <string name="playing">Playing</string>
+    <string name="resend_email">Resend Email</string>
 
 </resources>

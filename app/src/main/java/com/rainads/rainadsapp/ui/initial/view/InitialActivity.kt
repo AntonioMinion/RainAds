@@ -17,6 +17,7 @@ import com.google.android.gms.ads.MobileAds
 import com.rainads.rainadsapp.R
 import com.rainads.rainadsapp.data.network.models.Country
 import com.rainads.rainadsapp.data.network.models.ResendEmailRequest
+import com.rainads.rainadsapp.data.network.models.ResetPasswordRequest
 import com.rainads.rainadsapp.ui.base.view.BaseActivity
 import com.rainads.rainadsapp.ui.initial.interactor.InitialMVPInteractor
 import com.rainads.rainadsapp.ui.initial.presenter.InitialMVPPresenter
@@ -26,12 +27,13 @@ import com.rainads.rainadsapp.util.*
 import com.rainads.rainadsapp.util.AppUtils.hideKeyboard
 import kotlinx.android.synthetic.main.activity_initial.*
 import kotlinx.android.synthetic.main.dialog_custom_referral_code.*
+import kotlinx.android.synthetic.main.dialog_forgot_password.*
 import kotlinx.android.synthetic.main.dialog_resend_email.*
 import javax.inject.Inject
 
 
 class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinishedListener,
-    BaseActivity.PermissionRequestListener {
+        BaseActivity.PermissionRequestListener {
 
     @Inject
     internal lateinit var presenter: InitialMVPPresenter<InitialMVPView, InitialMVPInteractor>
@@ -40,7 +42,7 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
 
     private lateinit var dialog: Dialog
 
-    private fun initAdProviders(){
+    private fun initAdProviders() {
         MobileAds.initialize(
                 this,
                 "ca-app-pub-6953773192251170~7601411476"
@@ -67,8 +69,8 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
         presenter.onAttach(this)
 
         spinner_countries.background.setColorFilter(
-            ContextCompat.getColor(this, R.color.white),
-            PorterDuff.Mode.SRC_ATOP
+                ContextCompat.getColor(this, R.color.white),
+                PorterDuff.Mode.SRC_ATOP
         )
 
         setOnClickListeners()
@@ -123,6 +125,25 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
         dialog.show()
     }
 
+    private fun openForgotPasswordDialog() {
+        dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setContentView(R.layout.dialog_forgot_password)
+
+        dialog.btnSend.setOnClickListener {
+            if (dialog.etEmail.text.toString().isEmpty())
+                return@setOnClickListener
+            presenter.onResetPassword(ResetPasswordRequest(dialog.etEmail.text.toString()))
+            dialog.dismiss()
+        }
+
+        dialog.btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
 
     private fun clearFields() {
         et_email.setText("")
@@ -187,11 +208,11 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
 
     private fun registerUser(referral: String) {
         presenter.onRegisterClicked(
-            et_email.text.toString(),
-            et_password.text.toString(),
-            et_confirm_password.text.toString(),
-            spinner_countries.selectedItem.toString(),
-            referral
+                et_email.text.toString(),
+                et_password.text.toString(),
+                et_confirm_password.text.toString(),
+                spinner_countries.selectedItem.toString(),
+                referral
         )
     }
 
@@ -214,6 +235,10 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
 
     private fun setOnClickListeners() {
 
+        tvForgotPassword.setOnClickListener {
+            openForgotPasswordDialog()
+        }
+
         menu_register.setOnClickListener {
             if (!isSignUp)
                 menuClicked(menu_register, menu_login)
@@ -233,14 +258,14 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
                         askForReferralCode()
                     else
                         AppUtils.showMySnackBar(
-                            it,
-                            Handler.getErrorMessage(MyConstants.ERROR_ACCEPT_TERMS_AND_PRIVACY),
-                            SnackBarType.INFO
+                                it,
+                                Handler.getErrorMessage(MyConstants.ERROR_ACCEPT_TERMS_AND_PRIVACY),
+                                SnackBarType.INFO
                         )
                 } else {
                     presenter.onLoginClicked(
-                        et_email.text.toString(),
-                        et_password.text.toString()
+                            et_email.text.toString(),
+                            et_password.text.toString()
                     )
                 }
             } else {
@@ -263,11 +288,11 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
 
         with(builder)
         {
-            setTitle(if(isTerms) getString(R.string.terms_of_use) else getString(R.string.privacy_policy))
-            setMessage(if(isTerms) getText(R.string.terms_of_use_text) else getText(R.string.privacy_policy_text))
+            setTitle(if (isTerms) getString(R.string.terms_of_use) else getString(R.string.privacy_policy))
+            setMessage(if (isTerms) getText(R.string.terms_of_use_text) else getText(R.string.privacy_policy_text))
             setPositiveButton(
-                getString(R.string.close),
-                DialogInterface.OnClickListener(function = positiveButtonClick)
+                    getString(R.string.close),
+                    DialogInterface.OnClickListener(function = positiveButtonClick)
             )
             show()
         }
@@ -293,6 +318,9 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
 
         deselectedView.setTextColor(ContextCompat.getColor(this, R.color.white))
         deselectedView.setBackgroundResource(if (deselectedView.id == menu_register.id) R.drawable.initial_menu_top_left else R.drawable.initial_menu_top_right)
+
+        llPrivacyPolicy.visibility = if (isSignUp) View.VISIBLE else View.GONE
+        llTermsOfUse.visibility = if (isSignUp) View.VISIBLE else View.GONE
     }
 
 }

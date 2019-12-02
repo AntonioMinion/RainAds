@@ -50,6 +50,19 @@
             android:visibility="gone" />
 
         <TextView
+            android:id="@+id/tvWithdrawNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_horizontal"
+            android:text="@string/withdraw_note"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/tvBtcAddressLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

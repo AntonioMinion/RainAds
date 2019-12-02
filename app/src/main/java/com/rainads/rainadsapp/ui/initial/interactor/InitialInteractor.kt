@@ -10,6 +10,7 @@ import com.rainads.rainadsapp.ui.base.interactor.BaseInteractor
 import com.rainads.rainadsapp.util.AppUtils
 import com.rainads.rainadsapp.util.MyConstants
 import io.reactivex.Observable
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class InitialInteractor @Inject internal constructor(
@@ -59,4 +60,7 @@ class InitialInteractor @Inject internal constructor(
 
     override fun resendEmail(request: ResendEmailRequest) =
             apiCalls.resendConfirmEmail(request)
+
+    override fun resetPassword(request: ResetPasswordRequest): Observable<String>  =
+            apiCalls.resetPassword(request)
 }
