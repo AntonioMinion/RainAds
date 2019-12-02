@@ -11,9 +11,6 @@ import com.rainads.rainadsapp.ui.main.view.MainActivity
 import com.rainads.rainadsapp.ui.splash.interactor.SplashMVPInteractor
 import com.rainads.rainadsapp.ui.splash.presenter.SplashMVPPresenter
 import com.rainads.rainadsapp.util.AppUtils
-import com.startapp.android.publish.ads.nativead.StartAppNativeAd
-import com.startapp.android.publish.adsCommon.StartAppAd
-import com.startapp.android.publish.adsCommon.StartAppSDK
 import kotlinx.android.synthetic.main.activity_splash.*
 import javax.inject.Inject
 
@@ -31,12 +28,12 @@ class SplashActivity : BaseActivity(), SplashMVPView {
             "ca-app-pub-6953773192251170~7601411476"
         )
 
-        StartAppSDK.init(this, "207141024", false)
+/*        StartAppSDK.init(this, "207141024", false)
 
         StartAppSDK.setUserConsent (this,
             "pas",
             System.currentTimeMillis(),
-            false)
+            false)*/
 
     }
 

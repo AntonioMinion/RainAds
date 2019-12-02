@@ -19,6 +19,7 @@ class MainInteractor @Inject internal constructor(
     MainMVPInteractor {
 
     override fun downloadAd(): Observable<AdModel> {
+/*
         val elapsedSeconds =
             (SystemClock.elapsedRealtime() - preferenceHelper.getLastWatchedAdTime()) / 1000.0
 
@@ -32,6 +33,7 @@ class MainInteractor @Inject internal constructor(
                 )
             )
         }
+*/
 
         return apiCalls.getAd()
     }

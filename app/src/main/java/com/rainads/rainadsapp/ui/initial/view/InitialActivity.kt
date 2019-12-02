@@ -24,7 +24,6 @@ import com.rainads.rainadsapp.ui.main.view.MainActivity
 import com.rainads.rainadsapp.ui.scanner.view.ScannerDialog
 import com.rainads.rainadsapp.util.*
 import com.rainads.rainadsapp.util.AppUtils.hideKeyboard
-import com.startapp.android.publish.adsCommon.StartAppSDK
 import kotlinx.android.synthetic.main.activity_initial.*
 import kotlinx.android.synthetic.main.dialog_custom_referral_code.*
 import kotlinx.android.synthetic.main.dialog_resend_email.*
@@ -46,12 +45,12 @@ class InitialActivity : BaseActivity(), InitialMVPView, ScannerDialog.ScanFinish
                 this,
                 "ca-app-pub-6953773192251170~7601411476"
         )
-
+/*
         StartAppSDK.init(this, "207141024", true)
         StartAppSDK.setUserConsent (this,
                 "pas",
                 System.currentTimeMillis(),
-                false)
+                false)*/
 
     }
 

@@ -42,7 +42,7 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
     private var adDuration = 0L
     private var adPrice = 30
 
-    private val startAppAd = StartAppAd(this)
+    //private val startAppAd = StartAppAd(this)
 
     private var adWatched = false
 
@@ -158,8 +158,14 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
                 mRewardedVideoAd.show()
                 dialog.dismiss()
             } else {
+                AppUtils.showMyToast(
+                    layoutInflater,
+                    this@WatchAdActivity,
+                    getString(R.string.ad_isnt_loaded),
+                    ToastType.INFO
+                )
                 //AdMob not found, try to load StartApp ad
-                startAppAd.setVideoListener {
+/*                startAppAd.setVideoListener {
                     presenter.watchAdExtra(adId)
                 }
 
@@ -181,7 +187,7 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
 
                 })
 
-                startAppAd.showAd()
+                startAppAd.showAd()*/
             }
 
         }
@@ -227,6 +233,11 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             settings.safeBrowsingEnabled = true  // api 26
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        }
+
         //settings.pluginState = WebSettings.PluginState.ON
         settings.useWideViewPort = true
         settings.loadWithOverviewMode = true
