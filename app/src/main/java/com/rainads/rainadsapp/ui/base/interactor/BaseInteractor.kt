@@ -1,7 +1,9 @@
 package com.rainads.rainadsapp.ui.base.interactor
 
 import com.rainads.rainadsapp.data.ApiCalls
+import com.rainads.rainadsapp.data.network.models.User
 import com.rainads.rainadsapp.data.preferences.PreferenceHelper
+import io.reactivex.Observable
 
 open class BaseInteractor() : MVPInteractor {
 
@@ -23,8 +25,12 @@ open class BaseInteractor() : MVPInteractor {
         it.setBtcAddress(null)
     }
 
+    override fun downloadUser(): Observable<User> = apiCalls.getUser(preferenceHelper.getAccessToken()!!)
+
     override fun getCode() = this.preferenceHelper.getAccessToken()
 
     override fun getBtcAddress(): String? = this.preferenceHelper.getBtcAddress()
+
+
 
 }

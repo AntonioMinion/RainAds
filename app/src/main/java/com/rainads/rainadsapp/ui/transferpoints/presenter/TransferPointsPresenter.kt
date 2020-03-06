@@ -1,14 +1,14 @@
-package com.rainads.rainadsapp.ui.deposit.presenter
+package com.rainads.rainadsapp.ui.transferpoints.presenter
 
 import com.rainads.rainadsapp.ui.base.presenter.BasePresenter
-import com.rainads.rainadsapp.ui.deposit.interactor.IDepositInteractor
-import com.rainads.rainadsapp.ui.deposit.view.DepositView
+import com.rainads.rainadsapp.ui.transferpoints.interactor.ITransferPointsInteractor
+import com.rainads.rainadsapp.ui.transferpoints.view.TransferPointsView
 import com.rainads.rainadsapp.util.SchedulerProvider
 import com.rainads.rainadsapp.util.ToastType
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class DepositPresenter<V : DepositView, I : IDepositInteractor>
+class TransferPointsPresenter<V : TransferPointsView, I : ITransferPointsInteractor>
 @Inject internal constructor(
     interactor: I,
     schedulerProvider: SchedulerProvider,
@@ -17,7 +17,7 @@ class DepositPresenter<V : DepositView, I : IDepositInteractor>
     interactor = interactor,
     schedulerProvider = schedulerProvider,
     compositeDisposable = disposable
-), IDepositPresenter<V, I> {
+), ITransferPointsPresenter<V, I> {
 
     override fun getUser() {
         getView()?.showProgress()
@@ -36,42 +36,30 @@ class DepositPresenter<V : DepositView, I : IDepositInteractor>
         }
     }
 
-
-    override fun withdrawRequest(btcAddress: String, amount: String) {
+    override fun sendFunds(receiverId: String, amount: String) {
         getView()?.showProgress()
         interactor?.let {
             compositeDisposable.add(
-                it.sendWithdrawRequest(btcAddress, amount)
+                it.makeTransferPointsCall(receiverId, amount)
                     .compose(schedulerProvider.ioToMainObservableScheduler())
-                    .subscribe({ result ->
+                    .subscribe({ msg ->
                         getView()?.hideProgress()
-                        getView()?.showMessage(ToastType.INFO, result.toString())
+                        if (msg.contains("success", ignoreCase = true))
+                            getView()?.sendFundsCallback(ToastType.SUCCESS, msg)
+                        else
+                            getView()?.sendFundsCallback(ToastType.ERROR, msg)
                     }, { err ->
                         println(err)
                         getView()?.hideProgress()
-                        getView()?.showMessage(ToastType.ERROR, err.message.toString())
+                        var errorMsg = err.message
+
+                        if(errorMsg == null)
+                            errorMsg = "An Error Has Occurred"
+
+                        getView()?.sendFundsCallback(ToastType.ERROR, errorMsg)
                     })
             )
         }
     }
-
-    override fun depositRequest(amount: String) {
-        getView()?.showProgress()
-        interactor?.let {
-            compositeDisposable.add(
-                it.sendDepositRequest(amount)
-                    .compose(schedulerProvider.ioToMainObservableScheduler())
-                    .subscribe({ result ->
-                        getView()?.hideProgress()
-                        getView()?.showMessage(ToastType.INFO, result.toString())
-                    }, { err ->
-                        println(err)
-                        getView()?.hideProgress()
-                        getView()?.showMessage(ToastType.ERROR, err.message.toString())
-                    })
-            )
-        }
-    }
-
 
 }

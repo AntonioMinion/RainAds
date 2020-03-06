@@ -16,6 +16,8 @@ import com.rainads.rainadsapp.ui.myadlist.view.MyAdListActivity
 import com.rainads.rainadsapp.ui.scanner.ScannerDialogFragmentProvider
 import com.rainads.rainadsapp.ui.splash.SplashActivityModule
 import com.rainads.rainadsapp.ui.splash.view.SplashActivity
+import com.rainads.rainadsapp.ui.transferpoints.TransferPointsModule
+import com.rainads.rainadsapp.ui.transferpoints.view.TransferPointsActivity
 import com.rainads.rainadsapp.ui.watchad.WatchAdModule
 import com.rainads.rainadsapp.ui.watchad.view.WatchAdActivity
 import dagger.Module
@@ -47,5 +49,8 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(DepositModule::class)])
     abstract fun buildDepositActivity(): DepositActivity
+
+    @ContributesAndroidInjector(modules = [(TransferPointsModule::class), (ScannerDialogFragmentProvider::class)])
+    abstract fun buildTransferPointsActivity(): TransferPointsActivity
 
 }

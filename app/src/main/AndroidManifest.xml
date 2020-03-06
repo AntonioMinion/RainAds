@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.rainads.rainadsapp.MyApp"
+        android:name=".MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,36 +21,35 @@
             android:value="ca-app-pub-3940256099942544~3347511713" />
 
         <activity
-            android:name="com.rainads.rainadsapp.ui.myadlist.view.MyAdListActivity"
+            android:name=".ui.myadlist.view.MyAdListActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.rainads.rainadsapp.ui.levels.view.LevelsActivity"
+            android:name=".ui.levels.view.LevelsActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.rainads.rainadsapp.ui.addad.view.AddAdActivity"
+            android:name=".ui.addad.view.AddAdActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.rainads.rainadsapp.ui.deposit.view.DepositActivity"
+            android:name=".ui.deposit.view.DepositActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.rainads.rainadsapp.ui.watchad.view.WatchAdActivity"
+            android:name=".ui.watchad.view.WatchAdActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.rainads.rainadsapp.ui.main.view.MainActivity"
+            android:name=".ui.main.view.MainActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.rainads.rainadsapp.ui.initial.view.InitialActivity"
+            android:name=".ui.initial.view.InitialActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" />
 
         <activity
-            android:name="com.rainads.rainadsapp.ui.splash.view.SplashActivity"
+            android:name=".ui.transferpoints.view.TransferPointsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.splash.view.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme">
             <intent-filter>

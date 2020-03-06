@@ -29,6 +29,7 @@ object MyConstants {
     internal const val EXTRA_AD_DURATION = "EXTRA_AD_DURATION"
     internal const val EXTRA_AD_PRICE = "EXTRA_AD_PRICE"
     internal const val EXTRA_IS_DEPOSIT = "EXTRA_IS_DEPOSIT"
+    internal const val EXTRA_POINTS = "EXTRA_POINTS"
 
     internal const val REQUEST_RESULT_WATCH_AD = 100
 

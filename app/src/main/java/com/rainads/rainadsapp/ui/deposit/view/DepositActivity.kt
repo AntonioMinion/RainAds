@@ -22,8 +22,9 @@ class DepositActivity : BaseActivity(), DepositView {
     @Inject
     internal lateinit var presenter: DepositPresenter<DepositView, IDepositInteractor>
 
-    private var actualBalance = 0f
-    private var rainAdsBalance = 0f
+    //private var actualBalance = 0f
+    private var rainPointsBalance: Double = 0.0
+    private var btcBalance: Double = 0.0
     private var isDepositing = true
 
     override fun onFragmentAttached() {
@@ -48,10 +49,10 @@ class DepositActivity : BaseActivity(), DepositView {
 
         setListeners()
 
-        getExtras()
+        handleExtras()
     }
 
-    private fun getExtras() {
+    private fun handleExtras() {
         val bundle = intent.extras
         if (bundle != null) {
             isDepositing = bundle.getBoolean(MyConstants.EXTRA_IS_DEPOSIT, true)
@@ -67,44 +68,39 @@ class DepositActivity : BaseActivity(), DepositView {
                 tvWithdrawNote.visibility = View.VISIBLE
 
                 btnSendDepositRequest.text = getString(R.string.send_withdraw_request)
+
+                tvOpenWithdrawalHistory.visibility = View.VISIBLE
             }
         }
     }
 
     override fun userDownloaded(user: User) {
-        rainAdsBalance = if (user.balance.isNullOrEmpty()) 0f else user.balance!!.toFloat()
+        rainPointsBalance = if (user.balance.isNullOrEmpty()) 0.0 else user.balance!!.toDouble()
+        btcBalance = if (user.btcBalance.isNullOrEmpty()) 0.0 else user.btcBalance!!.toDouble()
 
         tvBalanceBtcAddress.text = if (user.btcAddress.isNullOrEmpty()) "/" else user.btcAddress
 
-        tvDepositRainAdsBalancePoints.text = if (user.balance.isNullOrEmpty()) "0" else user.balance
+        tvDepositRainAdsBalancePoints.text = String.format("%.2f", rainPointsBalance)
 
-        tvDepositPointsBalance.text = "0"
+        tvDepositPointsBalance.text = btcBalance.times(100000000).toString()
 
-        if (!user.btcBalance.isNullOrEmpty()) {
-            actualBalance = user.btcBalance?.toFloat()?.times(100000000)!!
+        if (((isDepositing && btcBalance == 0.0) || user.btcAddress.isNullOrEmpty())
+            || (!isDepositing && rainPointsBalance < 10000)
+        ) {
+            tilBtcAddress.alpha = 0.5f
+            etBtcAddress.isEnabled = false
+            tilDepositAmount.alpha = 0.5f
+            etDepositAmount.isEnabled = false
+            disableSendButton()
         }
-
-        if (user.btcBalance.isNullOrEmpty() || actualBalance == 0f) {
-            disableDepositButton()
-        } else {
-            tvDepositPointsBalance.text = actualBalance.toString()
-        }
-
-        /*
-             tvDepositBtcBalance.text = if (user.btcBalance.isNullOrEmpty()) "0" else user.btcBalance
-             tvDepositRainAdsBalance.text =
-                     if (user.balance.isNullOrEmpty()) "0"
-                     else user.balance?.toFloat()!!.div(100000000).toString()
-     */
-
     }
 
-    private fun disableDepositButton() {
+    private fun disableSendButton() {
         btnSendDepositRequest.isEnabled = false
         btnSendDepositRequest.alpha = 0.3f
     }
 
-    private fun enableDepositButton() {
+    private fun enableSendButton() {
         btnSendDepositRequest.isEnabled = true
         btnSendDepositRequest.alpha = 1f
     }
@@ -115,22 +111,26 @@ class DepositActivity : BaseActivity(), DepositView {
         btnSendDepositRequest.setOnClickListener {
             if (isDepositing) {
                 if (!etDepositAmount.text.isNullOrEmpty()
-                        || etDepositAmount.text.toString().toFloat() <= actualBalance)
+                    || etDepositAmount.text.toString().toFloat() <= rainPointsBalance
+                )
                     presenter.depositRequest(etDepositAmount.text.toString())
             } else {
-                if (!etDepositAmount.text.isNullOrEmpty()
-                        || etDepositAmount.text.toString().toFloat() <= rainAdsBalance)
-                    presenter.withdrawRequest(etBtcAddress.text.toString(), etDepositAmount.text.toString())
+                if (!etDepositAmount.text.isNullOrEmpty() && etDepositAmount.text.toString().toFloat() <= rainPointsBalance)
+                    presenter.withdrawRequest(
+                        etBtcAddress.text.toString(),
+                        etDepositAmount.text.toString()
+                    )
             }
         }
 
         etDepositAmount.doOnTextChanged { _, _, _, _ ->
             if (isDepositing) {
                 if (etDepositAmount.text.isNullOrEmpty()
-                        || etDepositAmount.text.toString().toFloat() > actualBalance)
-                    disableDepositButton()
+                    || etDepositAmount.text.toString().toFloat() > rainPointsBalance
+                )
+                    disableSendButton()
                 else
-                    enableDepositButton()
+                    enableSendButton()
             } else {
                 toggleFieldBasedOnInput()
             }
@@ -141,23 +141,28 @@ class DepositActivity : BaseActivity(), DepositView {
             toggleFieldBasedOnInput()
         }
 
+        tvOpenWithdrawalHistory.setOnClickListener {
+            //not implemented
+            AppUtils.showMyToast(layoutInflater, this, "Coming soon!", ToastType.INFO)
+        }
+
     }
 
-    private fun toggleFieldBasedOnInput(){
+    private fun toggleFieldBasedOnInput() {
         if (isAmountCorrect() && isAddressCorrect())
-            enableDepositButton()
+            enableSendButton()
         else
-            disableDepositButton()
+            disableSendButton()
     }
 
-    private fun isAmountCorrect(): Boolean{
+    private fun isAmountCorrect(): Boolean {
         return !(etDepositAmount.text.isNullOrEmpty()
-                || etDepositAmount.text.toString().toFloat() > rainAdsBalance
-                || etDepositAmount.text.toString().toFloat()  < 10000)
+                || etDepositAmount.text.toString().toFloat() > rainPointsBalance
+                || etDepositAmount.text.toString().toFloat() < 10000)
     }
 
-    private fun isAddressCorrect(): Boolean{
-        return !etBtcAddress.text.toString().isEmpty()
+    private fun isAddressCorrect(): Boolean {
+        return etBtcAddress.text.toString().isNotEmpty()
     }
 
 }

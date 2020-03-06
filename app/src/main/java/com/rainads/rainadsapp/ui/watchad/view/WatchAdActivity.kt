@@ -203,7 +203,12 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
     private fun setOnClickListeners() {
         iv_web_back.setOnClickListener { if (webView.canGoBack()) webView.goBack() }
         iv_web_forward.setOnClickListener { if (webView.canGoForward()) webView.goForward() }
-        ivBack.setOnClickListener { onBackPressed() }
+        ivBack.setOnClickListener { finish() }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
     private fun initWebView() {
@@ -304,6 +309,7 @@ class WatchAdActivity : BaseActivity(), WatchAdView, RewardedVideoAdListener {
     override fun onDestroy() {
         super.onDestroy()
         mRewardedVideoAd.destroy(this)
+        presenter.pauseTimer()
     }
 
     override fun onRewardedVideoCompleted() {

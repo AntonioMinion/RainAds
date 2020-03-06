@@ -28,6 +28,7 @@ import com.rainads.rainadsapp.ui.levels.view.LevelsActivity
 import com.rainads.rainadsapp.ui.main.interactor.MainMVPInteractor
 import com.rainads.rainadsapp.ui.main.presenter.MainMVPPresenter
 import com.rainads.rainadsapp.ui.myadlist.view.MyAdListActivity
+import com.rainads.rainadsapp.ui.transferpoints.view.TransferPointsActivity
 import com.rainads.rainadsapp.ui.watchad.view.WatchAdActivity
 import com.rainads.rainadsapp.util.AppUtils
 import com.rainads.rainadsapp.util.MyConstants
@@ -35,6 +36,8 @@ import com.rainads.rainadsapp.util.ToastType
 import kotlinx.android.synthetic.main.bottom_sheet_ad.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_profile.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_profile.view.ivClose
+import kotlinx.android.synthetic.main.bottom_sheet_withdraw_options.*
+import kotlinx.android.synthetic.main.bottom_sheet_withdraw_options.view.*
 import kotlinx.android.synthetic.main.dashboard_main_card.*
 import kotlinx.android.synthetic.main.dialog_full_qr_code.*
 import kotlinx.android.synthetic.main.dialog_logout.*
@@ -99,7 +102,9 @@ class MainActivity : BaseActivity(), MainMVPView {
     }
 
     private fun setBalance() {
-        tvAmountAvailable.text = if (mUser.balance.isNullOrEmpty()) "0" else mUser.balance
+        tvAmountAvailable.text =
+            if (mUser.balance.isNullOrEmpty() || mUser.balance?.toFloat() == 0f) "0"
+            else String.format("%.2f", mUser.balance?.toDouble())
     }
 
     override fun onPause() {
@@ -155,6 +160,12 @@ class MainActivity : BaseActivity(), MainMVPView {
             presenter.getAd()
         }
 
+        btnTransferPoints.setOnClickListener {
+            val i = Intent(this, TransferPointsActivity::class.java)
+            i.putExtra(MyConstants.EXTRA_POINTS,  mUser.balance?.toDouble())
+            startActivityForResult(i, 11)
+        }
+
         btn_advertise.setOnClickListener {
             val i = Intent(this, MyAdListActivity::class.java)
             startActivity(i)
@@ -166,9 +177,7 @@ class MainActivity : BaseActivity(), MainMVPView {
         }
 
         frameWithdraw.setOnClickListener {
-            val i = Intent(this, DepositActivity::class.java)
-            i.putExtra(MyConstants.EXTRA_IS_DEPOSIT, false)
-            startActivity(i)
+            showWithdrawOptions()
         }
     }
 
@@ -176,8 +185,13 @@ class MainActivity : BaseActivity(), MainMVPView {
         lastOpenedAd = theAd
         if (!theAd.message.isNullOrEmpty()) {
             AppUtils.showMyToast(layoutInflater, this, theAd.message, ToastType.INFO)
-        } else if(theAd.duration.isNullOrEmpty() || theAd.price.isNullOrEmpty() || theAd.url.isNullOrEmpty()) {
-            AppUtils.showMyToast(layoutInflater, this, getString(R.string.ad_error), ToastType.ERROR)
+        } else if (theAd.duration.isNullOrEmpty() || theAd.price.isNullOrEmpty() || theAd.url.isNullOrEmpty()) {
+            AppUtils.showMyToast(
+                layoutInflater,
+                this,
+                getString(R.string.ad_error),
+                ToastType.ERROR
+            )
         } else {
             showAdBottomSheet(theAd)
         }
@@ -206,7 +220,7 @@ class MainActivity : BaseActivity(), MainMVPView {
 
     @SuppressLint("InflateParams")
     private fun showAdBottomSheet(theAd: AdModel) {
-        if(theAd.duration.isNullOrEmpty() || theAd.price.isNullOrEmpty())
+        if (theAd.duration.isNullOrEmpty() || theAd.price.isNullOrEmpty())
             return;
 
         val dialogView = layoutInflater.inflate(R.layout.bottom_sheet_ad, null)
@@ -215,21 +229,47 @@ class MainActivity : BaseActivity(), MainMVPView {
         dialogView.tv_ad_url.text = theAd.url
 
         dialogView.tv_ad_description.text =
-                if (theAd.description.isNullOrEmpty()) "/" else theAd.description
+            if (theAd.description.isNullOrEmpty()) "/" else theAd.description
 
         dialogView.tv_ad_duration.text =
-                if (theAd.duration.isNullOrEmpty()) "/" else theAd.duration
+            if (theAd.duration.isNullOrEmpty()) "/" else theAd.duration
 
-        dialogView.tv_ad_price.text = if (theAd.price.isNullOrEmpty()) "/" else (theAd.price.toInt() / 2).toString()
+        dialogView.tv_ad_price.text =
+            if (theAd.price.isNullOrEmpty()) "/" else (theAd.price.toInt() / 2).toString()
 
         dialogView.ll_ad_price.setOnClickListener {
             dialog.dismiss()
             val i = Intent(this, WatchAdActivity::class.java)
             i.putExtra(MyConstants.EXTRA_AD_URL, theAd.url)
             i.putExtra(MyConstants.EXTRA_AD_ID, theAd.id)
-            i.putExtra(MyConstants.EXTRA_AD_DURATION, if(theAd.duration != null) theAd.duration.toLong() else 0)
-            i.putExtra(MyConstants.EXTRA_AD_PRICE, if(theAd.price != null) theAd.price.toInt() / 2 else 0)
+            i.putExtra(
+                MyConstants.EXTRA_AD_DURATION,
+                if (theAd.duration != null) theAd.duration.toLong() else 0
+            )
+            i.putExtra(
+                MyConstants.EXTRA_AD_PRICE,
+                if (theAd.price != null) theAd.price.toInt() / 2 else 0
+            )
             startActivityForResult(i, MyConstants.REQUEST_RESULT_WATCH_AD)
+        }
+
+        dialogView.ivClose.setOnClickListener { dialog.dismiss() }
+
+        dialog.setContentView(dialogView)
+        dialog.show()
+    }
+
+    @SuppressLint("InflateParams")
+    private fun showWithdrawOptions() {
+        val dialogView = layoutInflater.inflate(R.layout.bottom_sheet_withdraw_options, null)
+
+        val dialog = BottomSheetDialog(this, R.style.SheetDialog)
+
+        dialogView.btnWithdrawalBtc.setOnClickListener {
+            dialog.dismiss()
+            val i = Intent(this, DepositActivity::class.java)
+            i.putExtra(MyConstants.EXTRA_IS_DEPOSIT, false)
+            startActivity(i)
         }
 
         dialogView.ivClose.setOnClickListener { dialog.dismiss() }
@@ -252,19 +292,30 @@ class MainActivity : BaseActivity(), MainMVPView {
         //Copy code
         view.ll_referral_code.setOnClickListener {
             val myClip = ClipData.newPlainText(
-                    getString(com.rainads.rainadsapp.R.string.referral_code),
-                    view.tv_referral_code.text
+                getString(com.rainads.rainadsapp.R.string.referral_code),
+                view.tv_referral_code.text
             )
             clipboardManager?.primaryClip = myClip
-            Toast.makeText(this, getString(com.rainads.rainadsapp.R.string.code_copied), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(com.rainads.rainadsapp.R.string.code_copied),
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         //Copy btc address
         view.ll_btc_container.setOnClickListener {
             val myClip =
-                    ClipData.newPlainText(getString(com.rainads.rainadsapp.R.string.btc_address), view.tv_btc_address.text)
+                ClipData.newPlainText(
+                    getString(com.rainads.rainadsapp.R.string.btc_address),
+                    view.tv_btc_address.text
+                )
             clipboardManager?.primaryClip = myClip
-            Toast.makeText(this, getString(com.rainads.rainadsapp.R.string.btc_copied), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(com.rainads.rainadsapp.R.string.btc_copied),
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         //open qr code bigger
@@ -274,6 +325,7 @@ class MainActivity : BaseActivity(), MainMVPView {
 
         //logout
         view.ll_logout.setOnClickListener {
+            dialog.dismiss()
             showLogoutDialog()
         }
 
@@ -290,7 +342,7 @@ class MainActivity : BaseActivity(), MainMVPView {
 
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        if(dialog.window != null)
+        if (dialog.window != null)
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.setContentView(R.layout.dialog_logout)
 
@@ -328,9 +380,9 @@ class MainActivity : BaseActivity(), MainMVPView {
         val bitMatrix: BitMatrix
         try {
             bitMatrix = MultiFormatWriter().encode(
-                    Value,
-                    BarcodeFormat.QR_CODE,
-                    500, 500, null
+                Value,
+                BarcodeFormat.QR_CODE,
+                500, 500, null
             )
 
         } catch (Illegalargumentexception: IllegalArgumentException) {

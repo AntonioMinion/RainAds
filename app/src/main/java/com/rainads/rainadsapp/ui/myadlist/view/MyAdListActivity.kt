@@ -12,7 +12,6 @@ import com.rainads.rainadsapp.ui.base.view.BaseActivity
 import com.rainads.rainadsapp.ui.deposit.view.DepositActivity
 import com.rainads.rainadsapp.ui.myadlist.interactor.IMyAdListInteractor
 import com.rainads.rainadsapp.ui.myadlist.presenter.MyAdListPresenter
-import com.rainads.rainadsapp.ui.watchad.view.WatchAdActivity
 import com.rainads.rainadsapp.util.AppUtils
 import com.rainads.rainadsapp.util.MyConstants
 import com.rainads.rainadsapp.util.ToastType
@@ -105,7 +104,8 @@ class MyAdListActivity : BaseActivity(), MyAdListView, MyAdsListAdapter.AdStatus
             }
         }
 
-        tvMyAdsBalance.text = if (user.balance.isNullOrEmpty()) "0" else user.balance
+        tvMyAdsBalance.text =
+            if (user.balance.isNullOrEmpty()) "0" else String.format("%.2f", user.balance?.toDouble())
     }
 
 }

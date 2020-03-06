@@ -16,7 +16,7 @@
     <string name="market">Market</string>
     <string name="network">Network</string>
     <string name="withdraw">Withdraw</string>
-    <string name="points">Rain Points</string>
+    <string name="points">RainPoints</string>
     <string name="balance">Balance</string>
     <string name="advertise">Advertise</string>
     <string name="check_internet_connection">"Check internet connection"</string>
@@ -54,7 +54,7 @@
     <string name="s">s</string>
     <string name="my_ads">My Ads</string>
     <string name="new_ad">New Ad</string>
-    <string name="soon">Soon</string>
+    <string name="soon">Soon!</string>
     <string name="ad_placement">AD PLACEMENT</string>
     <string name="you_haven_t_created_any_ads_yet">You haven\'t created any ads yet…</string>
     <string name="warning">Warning</string>
@@ -67,19 +67,18 @@
     <string name="seconds">seconds</string>
     <string name="deposit">Deposit</string>
     <string name="refresh">Refresh</string>
-    <string name="rainads_balance">RainAds Balance in BTC</string>
+    <string name="rainads_balance">RainPoints (in BTC)</string>
     <string name="amount">Amount</string>
     <string name="send_deposit_request">SEND DEPOSIT REQUEST</string>
     <string name="send_withdraw_request">SEND WITHDRAW REQUEST</string>
     <string name="you_have_pending_deposit_request">YOU HAVE PENDING DEPOSIT REQUEST!</string>
     <string name="transfer_fee">Transfer Fee</string>
-    <string name="amount_to_deposit_to_rainads_balance">Amount in points</string>
-    <string name="balance_on_btc_address">Balance on BTC Address</string>
+    <string name="amount_to_deposit_to_rainads_balance">Amount in RainPoints</string>
+    <string name="balance_on_btc_address">Balance on Address</string>
     <string name="btnContinue">Continue</string>
     <string name="scan_referral_code">Scan Referral Code</string>
     <string name="scanning">Scanning…</string>
-    <string name="balance_on_btc_address_points">Balance on BTC Address (Points)</string>
-    <string name="rainads_balance_points">RainAds Balance (Points)</string>
+    <string name="balance_on_btc_address_points">Balance on address\n(in RainPoints)</string>
     <string name="ok">OK</string>
     <string name="close">Close</string>
     <string name="success">Success</string>
@@ -87,7 +86,7 @@
     <string name="receiving_btc_address">Receiving BTC Address</string>
     <string name="havent_received_email">If you haven\'t received an email yet, you can try resending it.</string>
     <string name="please_confirm_your_email">Please confirm your email</string>
-    <string name="withdraw_limit_info">Minimum withdraw limit is 10,000 Points!</string>
+    <string name="withdraw_limit_info">Minimum withdraw limit is 10,000 RainPoints!</string>
     <string name="ad_error">No more ads were found</string>
     <string name="ad_time_error">You need to wait %1$s seconds before watching another ad</string>
     <string name="ad_isnt_loaded">No extra ad found.</string>
@@ -163,8 +162,24 @@
     <string name="please_enter_your_email_in_the_input_field_below">Please enter your email in the input field below.</string>
     <string name="send">Send</string>
     <string name="forgot_password">Forgot password?</string>
-    <string name="withdraw_note">10,000 points are paid out as 1€</string>
+    <string name="withdraw_note">10,000 RainPoints are paid out as 1€</string>
     <string name="playing">Playing</string>
     <string name="resend_email">Resend Email</string>
+    <string name="withdrawal_history">Withdrawal History</string>
+    <string name="paypal_and_bank_transfer_coming_soon">PayPal And Bank Transfer Coming Soon!</string>
+    <string name="bitcoin">Bitcoin</string>
+    <string name="paypal"><strike>PayPal</strike></string>
+    <string name="bank_transfer"><strike>Bank Transfer</strike></string>
+    <string name="coming_soon">Coming Soon!</string>
+    <string name="transfer_rainpoints">Transfer RainPoints</string>
+    <string name="direct_transfer">Direct Transfer</string>
+    <string name="send_rainpoints_to_any_user">Send RainPoints to any user</string>
+    <string name="user_id">User ID</string>
+    <string name="available_rainpoints">Available</string>
+    <string name="_0_0">0.0</string>
+    <string name="to">To</string>
+    <string name="confirm">Confirm</string>
+    <string name="receiver_id">Receiver ID</string>
+    <string name="withdraw_method">Withdraw Method</string>
 
 </resources>

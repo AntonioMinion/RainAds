@@ -41,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="42dp"
                     android:layout_marginEnd="24dp"
                     android:background="@drawable/menu_item_gradient_background"
                     android:baselineAligned="false"
@@ -75,7 +75,6 @@
                             android:text="@string/zero"
                             android:textColor="@color/white"
                             android:textSize="24sp"
-
                             android:textStyle="bold"
                             app:autoSizeMaxTextSize="32sp"
                             app:autoSizeMinTextSize="8sp"

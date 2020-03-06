@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlTransferPointsMainContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_gradient_background"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+
+    <requestFocus />
+
+    <TextView
+        android:id="@+id/tvDirectTransferTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/direct_transfer"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDirectTransferTitle"
+        android:gravity="center"
+        android:text="@string/send_rainpoints_to_any_user"
+        android:textColor="@color/white_60"
+        android:textSize="16sp" />
+
+    <include
+        layout="@layout/custom_back_button"
+        android:transitionName="backTransition" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_label_available_rp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/available_rainpoints"
+            android:textColor="@color/white_60"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvAmountAvailable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:gravity="end"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            tools:text="9999999" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/amount"
+            android:textColor="@color/white_60"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/etTransferAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edit_text_background_normal"
+                android:hint="@string/_0_0"
+                android:inputType="numberDecimal"
+                android:padding="16dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white_40"
+                android:textSize="16sp" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/to"
+            android:textColor="@color/white_60"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etReceiverId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background_normal"
+                android:hint="@string/receiver_id"
+                android:inputType="text"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="38dp"
+                android:paddingBottom="16dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white_40"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/ivScanQr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginEnd="12dp"
+                android:padding="12dp"
+                android:src="@drawable/ic_qr_scanner"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvConfirmTransfer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnTransferFunds"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="12dp"
+        android:text="@string/confirm"
+        android:textColor="@color/white_60"
+        android:visibility="gone" />
+
+
+    <ImageButton
+        android:id="@+id/btnTransferFunds"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/circle_green"
+        android:src="@drawable/ic_send" />
+
+</RelativeLayout>

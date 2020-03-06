@@ -16,4 +16,5 @@ object ApiEndPoint {
     const val ENDPOINT_WITHDRAW = BuildConfig.BASE_URL + "/withdrawl"
     const val ENDPOINT_RESEND_CONFIRM_EMAIL = BuildConfig.BASE_URL + "/resendEmailVerification"
     const val ENDPOINT_RESET_PASSWORD = BuildConfig.BASE_URL + "/resetPassword"
+    const val ENDPOINT_TRANSFER_POINTS = BuildConfig.BASE_URL + "/transferToUser"
 }
