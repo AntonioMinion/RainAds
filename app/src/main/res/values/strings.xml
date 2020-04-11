@@ -166,13 +166,14 @@
     <string name="playing">Playing</string>
     <string name="resend_email">Resend Email</string>
     <string name="withdrawal_history">Withdrawal History</string>
+    <string name="deposit_history">Deposit History</string>
     <string name="paypal_and_bank_transfer_coming_soon">PayPal And Bank Transfer Coming Soon!</string>
     <string name="bitcoin">Bitcoin</string>
     <string name="paypal"><strike>PayPal</strike></string>
     <string name="bank_transfer"><strike>Bank Transfer</strike></string>
     <string name="coming_soon">Coming Soon!</string>
     <string name="transfer_rainpoints">Transfer RainPoints</string>
-    <string name="direct_transfer">Direct Transfer</string>
+    <string name="direct_transfer">Direct\nTransfer</string>
     <string name="send_rainpoints_to_any_user">Send RainPoints to any user</string>
     <string name="user_id">User ID</string>
     <string name="available_rainpoints">Available</string>
@@ -181,5 +182,9 @@
     <string name="confirm">Confirm</string>
     <string name="receiver_id">Receiver ID</string>
     <string name="withdraw_method">Withdraw Method</string>
+    <string name="watch_video">Watch\nVideo</string>
+    <string name="transactions">Transactions</string>
+    <string name="no_transaction_history_available">No transaction history available</string>
+    <string name="txid_transaction_id">TxID</string>
 
 </resources>

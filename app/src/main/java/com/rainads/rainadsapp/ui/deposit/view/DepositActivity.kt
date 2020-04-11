@@ -1,5 +1,6 @@
 package com.rainads.rainadsapp.ui.deposit.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doOnTextChanged
@@ -8,6 +9,7 @@ import com.rainads.rainadsapp.data.network.models.User
 import com.rainads.rainadsapp.ui.base.view.BaseActivity
 import com.rainads.rainadsapp.ui.deposit.interactor.IDepositInteractor
 import com.rainads.rainadsapp.ui.deposit.presenter.DepositPresenter
+import com.rainads.rainadsapp.ui.transactions.view.TransactionsActivity
 import com.rainads.rainadsapp.util.AppUtils
 import com.rainads.rainadsapp.util.MyConstants
 import com.rainads.rainadsapp.util.ToastType
@@ -57,7 +59,7 @@ class DepositActivity : BaseActivity(), DepositView {
         if (bundle != null) {
             isDepositing = bundle.getBoolean(MyConstants.EXTRA_IS_DEPOSIT, true)
             if (!isDepositing) {
-                tvTransactionsTitle.text = getString(R.string.withdraw)
+                tvDepositWithdrawTitle.text = getString(R.string.withdraw)
 
                 llBtcBalance.visibility = View.GONE
                 ivTransferDirection.visibility = View.GONE
@@ -69,7 +71,8 @@ class DepositActivity : BaseActivity(), DepositView {
 
                 btnSendDepositRequest.text = getString(R.string.send_withdraw_request)
 
-                tvOpenWithdrawalHistory.visibility = View.VISIBLE
+                tvOpenTransactionsHistory.visibility = View.VISIBLE
+                tvOpenTransactionsHistory.text = getString(R.string.withdrawal_history)
             }
         }
     }
@@ -141,9 +144,11 @@ class DepositActivity : BaseActivity(), DepositView {
             toggleFieldBasedOnInput()
         }
 
-        tvOpenWithdrawalHistory.setOnClickListener {
+        tvOpenTransactionsHistory.setOnClickListener {
             //not implemented
-            AppUtils.showMyToast(layoutInflater, this, "Coming soon!", ToastType.INFO)
+            val i = Intent(this, TransactionsActivity::class.java)
+            i.putExtra(MyConstants.EXTRA_IS_DEPOSIT, isDepositing)
+            startActivity(i)
         }
 
     }

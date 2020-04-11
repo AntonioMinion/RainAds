@@ -36,7 +36,6 @@ import com.rainads.rainadsapp.util.ToastType
 import kotlinx.android.synthetic.main.bottom_sheet_ad.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_profile.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_profile.view.ivClose
-import kotlinx.android.synthetic.main.bottom_sheet_withdraw_options.*
 import kotlinx.android.synthetic.main.bottom_sheet_withdraw_options.view.*
 import kotlinx.android.synthetic.main.dashboard_main_card.*
 import kotlinx.android.synthetic.main.dialog_full_qr_code.*
@@ -162,7 +161,7 @@ class MainActivity : BaseActivity(), MainMVPView {
 
         btnTransferPoints.setOnClickListener {
             val i = Intent(this, TransferPointsActivity::class.java)
-            i.putExtra(MyConstants.EXTRA_POINTS,  mUser.balance?.toDouble())
+            i.putExtra(MyConstants.EXTRA_POINTS, mUser.balance?.toDouble())
             startActivityForResult(i, 11)
         }
 
@@ -171,13 +170,19 @@ class MainActivity : BaseActivity(), MainMVPView {
             startActivity(i)
         }
 
-        frameNetwork.setOnClickListener {
+        llNetwork.setOnClickListener {
             val i = Intent(this, LevelsActivity::class.java)
             startActivity(i)
         }
 
-        frameWithdraw.setOnClickListener {
+        llWithdraw.setOnClickListener {
             showWithdrawOptions()
+        }
+
+        llDeposit.setOnClickListener {
+            val i = Intent(this, DepositActivity::class.java)
+            i.putExtra(MyConstants.EXTRA_IS_DEPOSIT, true)
+            startActivity(i)
         }
     }
 

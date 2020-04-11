@@ -12,7 +12,7 @@
     <requestFocus />
 
     <TextView
-        android:id="@+id/tvTransactionsTitle"
+        android:id="@+id/tvDepositWithdrawTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -208,7 +208,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/tvOpenWithdrawalHistory"
+            android:id="@+id/tvOpenTransactionsHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -216,12 +216,9 @@
             android:drawablePadding="8dp"
             android:gravity="end|center"
             android:padding="8dp"
-            android:text="@string/withdrawal_history"
+            android:text="@string/deposit_history"
             android:textColor="@color/white_60"
-            android:textSize="16sp"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
+            android:textSize="16sp" />
 
     </LinearLayout>
 

@@ -98,4 +98,10 @@ class AppApiHelper @Inject constructor(private val preferenceHelper: PreferenceH
             .addHeaders(transferPointsRequest)
             .build()
             .stringObservable
+
+    override fun getTransactions(): Observable<TransactionData> =
+        Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_TRANSACTION_HISTORY)
+            .addHeaders(ApiHeader.ProtectedApiHeader(preferenceHelper.getAccessToken()))
+            .build()
+            .getObjectObservable(TransactionData::class.java)
 }
