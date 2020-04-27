@@ -1,8 +1,10 @@
 package com.rainads.rainadsapp.ui.deposit.view
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import androidx.core.widget.doOnTextChanged
 import com.rainads.rainadsapp.R
 import com.rainads.rainadsapp.data.network.models.User
@@ -15,6 +17,7 @@ import com.rainads.rainadsapp.util.MyConstants
 import com.rainads.rainadsapp.util.ToastType
 import kotlinx.android.synthetic.main.activity_deposit.*
 import kotlinx.android.synthetic.main.custom_back_button.*
+import kotlinx.android.synthetic.main.dialog_confirm_withdraw.*
 import javax.inject.Inject
 
 
@@ -118,11 +121,10 @@ class DepositActivity : BaseActivity(), DepositView {
                 )
                     presenter.depositRequest(etDepositAmount.text.toString())
             } else {
-                if (!etDepositAmount.text.isNullOrEmpty() && etDepositAmount.text.toString().toFloat() <= rainPointsBalance)
-                    presenter.withdrawRequest(
-                        etBtcAddress.text.toString(),
-                        etDepositAmount.text.toString()
-                    )
+                if (!etDepositAmount.text.isNullOrEmpty() && etDepositAmount.text.toString()
+                        .toFloat() <= rainPointsBalance
+                )
+                    showConfirmWithdrawDialog()
             }
         }
 
@@ -151,6 +153,28 @@ class DepositActivity : BaseActivity(), DepositView {
             startActivity(i)
         }
 
+    }
+
+    private fun showConfirmWithdrawDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setContentView(R.layout.dialog_confirm_withdraw)
+
+        dialog.btnCancelWithdraw.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.btnConfirmWithdraw.setOnClickListener {
+            dialog.dismiss()
+
+            presenter.withdrawRequest(
+                etBtcAddress.text.toString(),
+                etDepositAmount.text.toString()
+            )
+        }
+
+        dialog.show()
     }
 
     private fun toggleFieldBasedOnInput() {

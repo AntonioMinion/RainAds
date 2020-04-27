@@ -186,5 +186,8 @@
     <string name="transactions">Transactions</string>
     <string name="no_transaction_history_available">No transaction history available</string>
     <string name="txid_transaction_id">TxID</string>
+    <string name="confirm_withdraw">Confirm withdraw</string>
+    <string name="withdraw_balance_info_disclaimer">The balance will be automatically deducted after the payout period.</string>
+    <string name="withdraw_payout_info">Payouts are every Monday 20:00 CET</string>
 
 </resources>
